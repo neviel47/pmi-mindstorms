@@ -50,7 +50,7 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
-        private sbyte initialPower;
+        private int initialPower;
 
         /// <summary>
         /// 
@@ -90,7 +90,7 @@ namespace J2i.Net.XnaXboxController
                     MotorClip = mainBrick.MotorC;
                     motorPair = new NxtMotorSync(mainBrick.MotorA, mainBrick.MotorB);
                     mainBrick.Connect();
-                    initialPower = 1;
+                    initialPower = 10;
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (initialPower != null || initialPower != 0)
             {
-                motorPair.Run(initialPower, 0, 0);
+                motorPair.Run((sbyte)initialPower, 0, 0);
             }
         }
 
@@ -161,7 +161,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (initialPower != null || initialPower != 0)
             {
-                MotorRight.Run(initialPower, 0);
+                MotorRight.Run((sbyte)initialPower, 0);
                 MotorLeft.Run((sbyte)-initialPower, 0);
             }
         }
@@ -173,7 +173,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (initialPower != null || initialPower != 0)
             {
-                MotorLeft.Run(initialPower, 0);
+                MotorLeft.Run((sbyte)initialPower, 0);
                 MotorRight.Run((sbyte)-initialPower, 0);
             }
         }
@@ -191,9 +191,9 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Turbo()
         {
-            initialPower++;
-            if (initialPower > 10)
-                initialPower = 10;
+            initialPower=initialPower + 10;
+            if (initialPower > 100)
+                initialPower = 100;
             Run();
         }
 
@@ -202,7 +202,7 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Brake()
         {
-            initialPower--;
+            initialPower = initialPower - 10;
             if (initialPower < 0)
                 initialPower = 0;
             Run();
