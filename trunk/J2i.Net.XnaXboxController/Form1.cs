@@ -124,6 +124,10 @@ namespace J2i.Net.XnaXboxController
                     touchSensorRight.PollInterval = 100;
                     touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
                     touchSensorLeft.PollInterval = 100;
+                    colorSensor.SetColorDetectorMode();
+                    colorSensor.PollInterval = 100;
+                   // colorSensor.OnInsideRange += new NxtSensorEvent(IdentifyColor);
+                   // colorSensor.OnPolled += new Polled(IdentifyColor);
                     //touchSensor.OnReleased += new NxtSensorEvent(Stop);
                 }
                 else
@@ -365,7 +369,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (colorSensor != null)
             {
-                lblColor.Text = ColorSensor.TriggerIntensity.ToString();
+               lblColor.Text = colorSensor.Color.Value.ToString();
             }
         }
         #endregion
@@ -540,7 +544,7 @@ namespace J2i.Net.XnaXboxController
 
         private void button12_Click(object sender, EventArgs e)
         {
-            IdentifyColor();
+           IdentifyColor();
         }
 
     }
