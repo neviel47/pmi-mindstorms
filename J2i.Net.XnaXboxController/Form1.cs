@@ -365,7 +365,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (colorSensor != null)
             {
-                lblColor.Text = colorSensor.Color.Value.ToString();
+                lblColor.Text = ColorSensor.TriggerIntensity.ToString();
             }
         }
         #endregion
