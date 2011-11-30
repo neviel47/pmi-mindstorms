@@ -6,14 +6,16 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Reflection;
+using System.Diagnostics;
 //XNA Xbox360 Controller
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
 //MindSqualls
 using NKH.MindSqualls;
-using System.Reflection;
-using System.Diagnostics;
+using NKH.MindSqualls.MotorControl;
+
 
 namespace J2i.Net.XnaXboxController
 {
@@ -44,13 +46,13 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// A motor pair to combine 2 motors
         /// </summary>
-        private NxtMotorSync MotorPair;
-        private NxtMotor MotorRight;
-        private NxtMotor MotorLeft;
-        private NxtMotor MotorClip;
+        private NxtMotorSync motorPair;
+        private NxtMotor motorRight;
+        private NxtMotor motorLeft;
+        private NxtMotor motorClip;
         private NxtTouchSensor touchSensorRight = null;
         private NxtTouchSensor touchSensorLeft = null;
-        private Nxt2ColorSensor ColorSensor = null;
+        private Nxt2ColorSensor colorSensor = null;
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
@@ -94,10 +96,10 @@ namespace J2i.Net.XnaXboxController
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
-                    MotorRight = mainBrick.MotorB;
-                    MotorLeft = mainBrick.MotorC;
-                    MotorClip = mainBrick.MotorA;
-                    MotorPair = new NxtMotorSync(MotorRight, MotorLeft);
+                    motorRight = mainBrick.MotorB;
+                    motorLeft = mainBrick.MotorC;
+                    motorClip = mainBrick.MotorA;
+                    motorPair = new NxtMotorSync(motorRight, motorLeft);
 
                     //TOUCH SENSOR
                     touchSensorRight = new NxtTouchSensor();
@@ -105,13 +107,14 @@ namespace J2i.Net.XnaXboxController
                     touchSensorLeft = new NxtTouchSensor();
                     mainBrick.Sensor4 = touchSensorLeft;
 
-					//COLOR SENSOR
-                    ColorSensor = new Nxt2ColorSensor();
-                    mainBrick.Sensor2 = ColorSensor;
+                    //COLOR SENSOR
+                    colorSensor = new Nxt2ColorSensor();
+                    mainBrick.Sensor2 = colorSensor;
 
-                   
+
                     //CONNECTION
                     mainBrick.Connect();
+                    mainBrick.PlaySoundfile("Hello.rso");
                     lblNotConnected.Text = "Connected";
                     initialPower = 10;
                     clipMaxDegrees = 40;
@@ -146,14 +149,18 @@ namespace J2i.Net.XnaXboxController
             Idle();
 
             if (mainBrick != null && mainBrick.IsConnected)
-                mainBrick.Disconnect();
-
-            mainBrick = null;
-            MotorPair = null;
-            MotorRight = null;
-            MotorLeft = null;
-            MotorClip = null;
-            lblNotConnected.Text = "Disconnected";
+            {
+                mainBrick.PlaySoundfile("Have A Nice Day.rso");
+                motorPair = null;
+                motorRight = null;
+                motorLeft = null;
+                motorClip = null;
+                colorSensor = null;
+                touchSensorLeft = null;
+                touchSensorRight = null;
+                mainBrick = null;
+                lblNotConnected.Text = "Disconnected";
+            }
         }
 
         /// <summary>
@@ -165,9 +172,9 @@ namespace J2i.Net.XnaXboxController
         {
             if (mainBrick != null && mainBrick.IsConnected)
             {
-                MotorRight.Idle();
-                MotorLeft.Idle();
-                MotorClip.Idle();
+                motorRight.Idle();
+                motorLeft.Idle();
+                motorClip.Idle();
             }
         }
 
@@ -178,34 +185,41 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// To make the robot move forward
         /// </summary>
+        //public void Run()
+        //{
+        //    Run(initialPower, 0);
+        //}
         public void Run(int power, uint limit)
         {
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 if (power != 0)
                 {
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("Run"))
-                        MotorPair.Brake();
-                    MotorLeft.Run((sbyte)initialPower, limit);
-                    MotorRight.Run((sbyte)initialPower, limit);
+                        motorPair.Brake();
+                    motorLeft.Run((sbyte)initialPower, limit);
+                    motorRight.Run((sbyte)initialPower, limit);
                     //MotorPair.Run((sbyte)initialPower, 0, 0);
                 }
             }
             lastUsedMethod = "Run";
         }
 
-
+        //public void Back()
+        //{
+        //    Back(initialPower, 0);
+        //}
         public void Back(int power, uint limit)
         {
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 if (power != 0)
                 {
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("Back"))
-                        MotorPair.Brake();
+                        motorPair.Brake();
                     //MotorPair.Run((sbyte)-initialPower, 0, 0);
-                    MotorLeft.Run((sbyte)-initialPower, limit);
-                    MotorRight.Run((sbyte)-initialPower, limit);
+                    motorLeft.Run((sbyte)-initialPower, limit);
+                    motorRight.Run((sbyte)-initialPower, limit);
                 }
             }
             lastUsedMethod = "Back";
@@ -217,14 +231,14 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         public void TurnRight()
         {
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 if (initialPower != 0)
                 {
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnRight"))
-                        MotorPair.Brake();
-                    MotorRight.Run((sbyte)-initialPower, 0);
-                    MotorLeft.Run((sbyte)initialPower, 0);
+                        motorPair.Brake();
+                    motorRight.Run((sbyte)-initialPower, 0);
+                    motorLeft.Run((sbyte)initialPower, 0);
                 }
             }
             lastUsedMethod = "TurnRight";
@@ -235,14 +249,14 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         public void TurnLeft()
         {
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 if (initialPower != 0)
                 {
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnLeft"))
-                        MotorPair.Brake();
-                    MotorLeft.Run((sbyte)-initialPower, 0);
-                    MotorRight.Run((sbyte)initialPower, 0);
+                        motorPair.Brake();
+                    motorLeft.Run((sbyte)-initialPower, 0);
+                    motorRight.Run((sbyte)initialPower, 0);
                 }
             }
             lastUsedMethod = "TurnLeft";
@@ -253,23 +267,22 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Stop()
         {
-            if (MotorPair != null)
+            if (motorPair != null)
             {
-                MotorPair.Brake();
+                motorPair.Brake();
             }
         }
 
         private void TouchedOnRight(NxtPollable polledItem)
         {
             Stop();
-           
-            //mainBrick.PlaySoundfile("Watch Out.rso");
+            mainBrick.PlaySoundfile("Ouch 02.rso");
         }
 
         private void TouchedOnLeft(NxtPollable polledItem)
         {
             Stop();
-            mainBrick.PlaySoundfile("Shout.rso");
+            mainBrick.PlaySoundfile("Woops.rso");
         }
 
         /// <summary>
@@ -280,7 +293,7 @@ namespace J2i.Net.XnaXboxController
             initialPower = initialPower + 10;
             if (initialPower > 100)
                 initialPower = 100;
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 InvokeMethod(lastUsedMethod);
             }
@@ -288,12 +301,25 @@ namespace J2i.Net.XnaXboxController
 
         private void InvokeMethod(string methodName)
         {
-            // Get the desired method by name: DisplayName
-            MethodInfo methodInfo =
-               typeof(XnaInputForm).GetMethod(methodName);
-
-            // Use the instance to call the method without arguments
-            methodInfo.Invoke(this, null);
+            if (!string.IsNullOrEmpty(methodName))
+            {
+                // Get the desired method by name: DisplayName
+                MethodInfo methodInfo =
+                   typeof(XnaInputForm).GetMethod(methodName);
+                try
+                {
+                    object[] param = null;
+                    if(lastUsedMethod.Equals("Run")||lastUsedMethod.Equals("Back"))
+                    {
+                         param = new object[]{initialPower, (uint)0};
+                    }
+                    methodInfo.Invoke(this, param);
+                }
+                catch (Exception e)
+                {
+                    lblNotConnected.Text = e.Message;
+                }
+            }
         }
 
         /// <summary>
@@ -304,7 +330,7 @@ namespace J2i.Net.XnaXboxController
             initialPower = initialPower - 10;
             if (initialPower < 0)
                 initialPower = 0;
-            if (MotorPair != null)
+            if (motorPair != null)
             {
                 InvokeMethod(lastUsedMethod);
             }
@@ -315,9 +341,9 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void OpenClip()
         {
-            if (MotorClip != null)
+            if (motorClip != null)
             {
-                MotorClip.Run(40, clipMaxDegrees);
+                motorClip.Run(40, clipMaxDegrees);
             }
         }
 
@@ -326,9 +352,9 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void CloseClip()
         {
-            if (MotorClip != null)
+            if (motorClip != null)
             {
-                MotorClip.Run(-40, clipMaxDegrees);
+                motorClip.Run(-40, clipMaxDegrees);
             }
         }
 
@@ -337,9 +363,9 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void IdentifyColor()
         {
-            if (ColorSensor != null)
+            if (colorSensor != null)
             {
-                lblColor.Text = ColorSensor.Color.Value.ToString();
+                lblColor.Text = colorSensor.Color.Value.ToString();
             }
         }
         #endregion
@@ -350,7 +376,7 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
+
         private void ddlController_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (this.ddlController.SelectedIndex)
@@ -364,7 +390,7 @@ namespace J2i.Net.XnaXboxController
             this.StopAllVibration();
 
         }
-        
+
         private void StopAllVibration()
         {
             GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
@@ -372,13 +398,13 @@ namespace J2i.Net.XnaXboxController
             GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
             GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
         }
-        
+
         private void button1_Click(object sender, EventArgs e)
         {
             GamePad.SetVibration(playerIndex, (float)this.leftMotor.Value, (float)this.rightMotor.Value);
             vibrationCountdown = 30;
         }
-        
+
         private void CheckVibrationTimeout()
         {
             if (vibrationCountdown > 0)
@@ -441,7 +467,7 @@ namespace J2i.Net.XnaXboxController
             this.CheckVibrationTimeout();
             this.UpdateControllerState();
         }
-        
+
         private void XnaInputForm_Load(object sender, EventArgs e)
         {
             this.ddlController.SelectedIndex = 0;
@@ -452,7 +478,7 @@ namespace J2i.Net.XnaXboxController
         {
             this.StopAllVibration();
         }
-       
+
 
         private void button6_Click(object sender, EventArgs e)
         {
