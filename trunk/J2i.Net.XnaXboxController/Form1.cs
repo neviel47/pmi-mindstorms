@@ -7,9 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 //XNA Xbox360 Controller
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
+//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework.Input;
+//using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
 //MindSqualls
 using NKH.MindSqualls;
 
@@ -22,15 +22,15 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// The current state of the controller
         /// </summary>
-        GamePadState gamePadState;
+        //GamePadState gamePadState;
         /// <summary>
         /// The previous state of the controller
         /// </summary>
-        GamePadState previousState;
+        //GamePadState previousState;
         /// <summary>
         /// Keeps track of the current controller
         /// </summary>
-        PlayerIndex playerIndex = PlayerIndex.One;
+        //PlayerIndex playerIndex = PlayerIndex.One;
         /// <summary>
         /// Counter for limiting the time for which the vibration motors are on.
         /// </summary>
@@ -46,7 +46,7 @@ namespace J2i.Net.XnaXboxController
         private NxtMotor MotorRight;
         private NxtMotor MotorLeft;
         private NxtMotor MotorClip;
-
+ 
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
