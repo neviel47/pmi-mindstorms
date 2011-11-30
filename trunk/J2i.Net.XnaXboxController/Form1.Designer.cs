@@ -645,8 +645,9 @@ namespace J2i.Net.XnaXboxController
             this.lblColor.AutoSize = true;
             this.lblColor.Location = new System.Drawing.Point(565, 301);
             this.lblColor.Name = "lblColor";
-            this.lblColor.Size = new System.Drawing.Size(0, 13);
+            this.lblColor.Size = new System.Drawing.Size(16, 13);
             this.lblColor.TabIndex = 31;
+            this.lblColor.Text = "...";
             // 
             // XnaInputForm
             // 
