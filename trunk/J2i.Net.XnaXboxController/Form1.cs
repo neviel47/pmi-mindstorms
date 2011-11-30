@@ -111,13 +111,15 @@ namespace J2i.Net.XnaXboxController
                    
                     //CONNECTION
                     mainBrick.Connect();
+                    lblNotConnected.Text = "Connected";
                     initialPower = 10;
                     clipMaxDegrees = 40;
 
                     //EVENTS
                     touchSensorRight.OnPressed += new NxtSensorEvent(TouchedOnRight);
-                    touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
                     touchSensorRight.PollInterval = 100;
+                    touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
+                    touchSensorLeft.PollInterval = 100;
                     //touchSensor.OnReleased += new NxtSensorEvent(Stop);
                 }
                 else
