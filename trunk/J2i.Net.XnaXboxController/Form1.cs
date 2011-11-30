@@ -89,34 +89,36 @@ namespace J2i.Net.XnaXboxController
                 byte.TryParse(ConfigurationManager.AppSettings["PortCom"].ToString(), out comPort);
                 if (comPort != 0)
                 {
-                    //mainBrick = new NxtBrick(comPort);
+                    //MOTOR
                     mainBrick = new NxtBrick(NxtCommLinkType.USB, 5);
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
-
-                    touchSensorRight = new NxtTouchSensor();
-                    mainBrick.Sensor1 = touchSensorRight;
-                    touchSensorLeft = new NxtTouchSensor();
-                    mainBrick.Sensor2 = touchSensorLeft;
-
-                    mainBrick.Sensor2 = new Nxt2ColorSensor();
                     MotorRight = mainBrick.MotorB;
                     MotorLeft = mainBrick.MotorC;
                     MotorClip = mainBrick.MotorA;
                     MotorPair = new NxtMotorSync(MotorRight, MotorLeft);
+
+                    //TOUCH SENSOR
+                    touchSensorRight = new NxtTouchSensor();
+                    mainBrick.Sensor1 = touchSensorRight;
+                    touchSensorLeft = new NxtTouchSensor();
+                    mainBrick.Sensor4 = touchSensorLeft;
+
+                    //COLOR SENSOR
+                    mainBrick.Sensor2 = new Nxt2ColorSensor();
                     ColorSensor = mainBrick.Sensor2;
+                   
+                    //CONNECTION
                     mainBrick.Connect();
                     initialPower = 10;
                     clipMaxDegrees = 40;
 
-                    string s = mainBrick.Sounds[0].ToString();
-                    // Events
+                    //EVENTS
                     touchSensorRight.OnPressed += new NxtSensorEvent(TouchedOnRight);
                     touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
                     touchSensorRight.PollInterval = 100;
-
-                   // touchSensor.OnReleased += new NxtSensorEvent(Stop);
+                    //touchSensor.OnReleased += new NxtSensorEvent(Stop);
                 }
                 else
                 {
