@@ -42,7 +42,7 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// A motor pair to combine 2 motors
         /// </summary>
-        private NxtMotorSync motorPair;
+        private NxtMotorSync MotorPair;
         private NxtMotor MotorRight;
         private NxtMotor MotorLeft;
         private NxtMotor MotorClip;
@@ -80,17 +80,18 @@ namespace J2i.Net.XnaXboxController
                 byte.TryParse(ConfigurationManager.AppSettings["PortCom"].ToString(), out comPort);
                 if (comPort != null || comPort == 0)
                 {
-                    mainBrick = new NxtBrick(comPort);
-
+                    //mainBrick = new NxtBrick(comPort);
+                    mainBrick = new NxtBrick(NxtCommLinkType.USB, 5);
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
-                    MotorRight = mainBrick.MotorA;
-                    MotorLeft = mainBrick.MotorB;
-                    MotorClip = mainBrick.MotorC;
-                    motorPair = new NxtMotorSync(mainBrick.MotorA, mainBrick.MotorB);
+                    MotorRight = mainBrick.MotorB;
+                    MotorLeft = mainBrick.MotorC;
+                    MotorClip = mainBrick.MotorA;
+                    MotorPair = new NxtMotorSync(MotorRight, MotorLeft);
                     mainBrick.Connect();
                     initialPower = 10;
+                    clipMaxDegrees = 50;
                 }
                 else
                 {
@@ -99,8 +100,8 @@ namespace J2i.Net.XnaXboxController
             }
             catch (Exception ex)
             {
-                Disconnect();
-                lblNotConnected.Text = "Connection Error ! Wrong COM Port";
+                //Disconnect();
+                lblNotConnected.Text = "Connection Error ! Wrong COM Port or Any NXT!";
             }
         }
 
@@ -111,13 +112,14 @@ namespace J2i.Net.XnaXboxController
         /// <param name="e"></param>
         private void Disconnect()
         {
+
             Idle();
 
             if (mainBrick != null && mainBrick.IsConnected)
                 mainBrick.Disconnect();
 
             mainBrick = null;
-            motorPair = null;
+            MotorPair = null;
             MotorRight = null;
             MotorLeft = null;
             MotorClip = null;
@@ -148,9 +150,24 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Run()
         {
-            if (initialPower != null || initialPower != 0)
+            if (MotorPair != null)
             {
-                motorPair.Run((sbyte)initialPower, 0, 0);
+                if (initialPower != null || initialPower != 0)
+                {
+                    MotorPair.Run((sbyte)initialPower, 0, 0);
+                }
+            }
+        }
+
+
+        private void Back()
+        {
+            if (MotorPair != null)
+            {
+                if (initialPower != null || initialPower != 0)
+                {
+                    MotorPair.Run((sbyte)-initialPower, 0, 0);
+                }
             }
         }
 
@@ -159,10 +176,13 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void TurnRight()
         {
-            if (initialPower != null || initialPower != 0)
+            if (MotorPair != null)
             {
-                MotorRight.Run((sbyte)initialPower, 0);
-                MotorLeft.Run((sbyte)-initialPower, 0);
+                if (initialPower != null || initialPower != 0)
+                {
+                    MotorRight.Run((sbyte)initialPower, 0);
+                    MotorLeft.Run((sbyte)-initialPower, 0);
+                }
             }
         }
 
@@ -171,10 +191,13 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void TurnLeft()
         {
-            if (initialPower != null || initialPower != 0)
+            if (MotorPair != null)
             {
-                MotorLeft.Run((sbyte)initialPower, 0);
-                MotorRight.Run((sbyte)-initialPower, 0);
+                if (initialPower != null || initialPower != 0)
+                {
+                    MotorLeft.Run((sbyte)initialPower, 0);
+                    MotorRight.Run((sbyte)-initialPower, 0);
+                }
             }
         }
 
@@ -183,7 +206,10 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Stop()
         {
-            motorPair.Idle();
+            if (MotorPair != null)
+            {
+                MotorPair.Idle();
+            }
         }
 
         /// <summary>
@@ -191,10 +217,13 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void Turbo()
         {
-            initialPower=initialPower + 10;
+            initialPower = initialPower + 10;
             if (initialPower > 100)
                 initialPower = 100;
-            Run();
+            if (MotorPair != null)
+            {
+                Run();
+            }
         }
 
         /// <summary>
@@ -205,7 +234,10 @@ namespace J2i.Net.XnaXboxController
             initialPower = initialPower - 10;
             if (initialPower < 0)
                 initialPower = 0;
-            Run();
+            if (MotorPair != null)
+            {
+                Run();
+            }
         }
 
         /// <summary>
@@ -213,7 +245,10 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void OpenClip()
         {
-            MotorClip.Run(100, clipMaxDegrees);
+            if (MotorClip != null)
+            {
+                MotorClip.Run(40, clipMaxDegrees);
+            }
         }
 
         /// <summary>
@@ -221,7 +256,10 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         private void CloseClip()
         {
-            MotorClip.Run(-100, clipMaxDegrees);
+            if (MotorClip != null)
+            {
+                MotorClip.Run(-40, clipMaxDegrees);
+            }
         }
         #endregion
 
@@ -332,6 +370,71 @@ namespace J2i.Net.XnaXboxController
         {
             this.StopAllVibration();
         }
+
+
+
+
+
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Run();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Back();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            TurnRight();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            TurnLeft();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            OpenClip();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            CloseClip();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Turbo();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Brake();
+            label10.Text = initialPower.ToString();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            Idle();
+        }
+
+
 
     }
 }
