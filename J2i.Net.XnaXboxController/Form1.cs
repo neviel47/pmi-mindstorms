@@ -46,7 +46,7 @@ namespace J2i.Net.XnaXboxController
         private NxtMotor MotorRight;
         private NxtMotor MotorLeft;
         private NxtMotor MotorClip;
- 
+        private NxtSensor ColorSensor;
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
@@ -85,10 +85,12 @@ namespace J2i.Net.XnaXboxController
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
+                    mainBrick.Sensor2 = new Nxt2ColorSensor();
                     MotorRight = mainBrick.MotorB;
                     MotorLeft = mainBrick.MotorC;
                     MotorClip = mainBrick.MotorA;
                     MotorPair = new NxtMotorSync(MotorRight, MotorLeft);
+                    ColorSensor = mainBrick.Sensor2;
                     mainBrick.Connect();
                     initialPower = 10;
                     clipMaxDegrees = 50;
@@ -261,6 +263,17 @@ namespace J2i.Net.XnaXboxController
                 MotorClip.Run(-40, clipMaxDegrees);
             }
         }
+
+        /// <summary>
+        /// Identify the color
+        /// </summary>
+        private void IdentifyColor()
+        {
+            if (ColorSensor != null)
+            {
+                
+            }
+        }
         #endregion
 
         /// <summary>
@@ -269,6 +282,7 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /*
         private void ddlController_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (this.ddlController.SelectedIndex)
@@ -282,7 +296,7 @@ namespace J2i.Net.XnaXboxController
             this.StopAllVibration();
 
         }
-
+        
         private void StopAllVibration()
         {
             GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
@@ -290,13 +304,13 @@ namespace J2i.Net.XnaXboxController
             GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
             GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             GamePad.SetVibration(playerIndex, (float)this.leftMotor.Value, (float)this.rightMotor.Value);
             vibrationCountdown = 30;
         }
-
+        
         private void CheckVibrationTimeout()
         {
             if (vibrationCountdown > 0)
@@ -359,7 +373,7 @@ namespace J2i.Net.XnaXboxController
             this.CheckVibrationTimeout();
             this.UpdateControllerState();
         }
-
+        
         private void XnaInputForm_Load(object sender, EventArgs e)
         {
             this.ddlController.SelectedIndex = 0;
@@ -370,7 +384,7 @@ namespace J2i.Net.XnaXboxController
         {
             this.StopAllVibration();
         }
-
+        */
 
 
 
@@ -432,6 +446,11 @@ namespace J2i.Net.XnaXboxController
         private void button11_Click(object sender, EventArgs e)
         {
             Idle();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            IdentifyColor();
         }
 
 
