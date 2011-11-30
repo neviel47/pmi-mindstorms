@@ -7,9 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 //XNA Xbox360 Controller
-//using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Input;
-//using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
 //MindSqualls
 using NKH.MindSqualls;
 using System.Reflection;
@@ -24,15 +24,15 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// The current state of the controller
         /// </summary>
-        //GamePadState gamePadState;
+        GamePadState gamePadState;
         /// <summary>
         /// The previous state of the controller
         /// </summary>
-        //GamePadState previousState;
+        GamePadState previousState;
         /// <summary>
         /// Keeps track of the current controller
         /// </summary>
-        //PlayerIndex playerIndex = PlayerIndex.One;
+        PlayerIndex playerIndex = PlayerIndex.One;
         /// <summary>
         /// Counter for limiting the time for which the vibration motors are on.
         /// </summary>
@@ -48,12 +48,9 @@ namespace J2i.Net.XnaXboxController
         private NxtMotor MotorRight;
         private NxtMotor MotorLeft;
         private NxtMotor MotorClip;
-<<<<<<< .mine
         private NxtTouchSensor touchSensorRight = null;
         private NxtTouchSensor touchSensorLeft = null;
-=======
         private NxtSensor ColorSensor;
->>>>>>> .r7
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
@@ -97,16 +94,13 @@ namespace J2i.Net.XnaXboxController
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
-<<<<<<< .mine
 
                     touchSensorRight = new NxtTouchSensor();
                     mainBrick.Sensor1 = touchSensorRight;
                     touchSensorLeft = new NxtTouchSensor();
                     mainBrick.Sensor2 = touchSensorLeft;
 
-=======
                     mainBrick.Sensor2 = new Nxt2ColorSensor();
->>>>>>> .r7
                     MotorRight = mainBrick.MotorB;
                     MotorLeft = mainBrick.MotorC;
                     MotorClip = mainBrick.MotorA;
@@ -332,9 +326,6 @@ namespace J2i.Net.XnaXboxController
                 MotorClip.Run(-40, clipMaxDegrees);
             }
         }
-<<<<<<< .mine
-
-=======
 
         /// <summary>
         /// Identify the color
@@ -346,7 +337,6 @@ namespace J2i.Net.XnaXboxController
                 
             }
         }
->>>>>>> .r7
         #endregion
 
         /// <summary>
@@ -355,7 +345,7 @@ namespace J2i.Net.XnaXboxController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /*
+        
         private void ddlController_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (this.ddlController.SelectedIndex)
@@ -457,11 +447,7 @@ namespace J2i.Net.XnaXboxController
         {
             this.StopAllVibration();
         }
-        */
-
-
-
-
+       
 
         private void button6_Click(object sender, EventArgs e)
         {
