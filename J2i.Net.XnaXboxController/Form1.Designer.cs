@@ -513,7 +513,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // BtnConnect
             // 
-            this.BtnConnect.Location = new System.Drawing.Point(387, 7);
+            this.BtnConnect.Location = new System.Drawing.Point(526, 48);
             this.BtnConnect.Name = "BtnConnect";
             this.BtnConnect.Size = new System.Drawing.Size(75, 23);
             this.BtnConnect.TabIndex = 18;
@@ -523,7 +523,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(639, 40);
+            this.button2.Location = new System.Drawing.Point(639, 85);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 19;
@@ -533,7 +533,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(646, 191);
+            this.button3.Location = new System.Drawing.Point(646, 236);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 20;
@@ -543,7 +543,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(484, 191);
+            this.button4.Location = new System.Drawing.Point(484, 236);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 21;
@@ -553,7 +553,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(565, 191);
+            this.button5.Location = new System.Drawing.Point(565, 236);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 22;
@@ -563,7 +563,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(565, 162);
+            this.button6.Location = new System.Drawing.Point(565, 207);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 23;
@@ -573,7 +573,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(639, 69);
+            this.button7.Location = new System.Drawing.Point(639, 114);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 24;
@@ -583,7 +583,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(484, 69);
+            this.button8.Location = new System.Drawing.Point(484, 114);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 25;
@@ -593,7 +593,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(484, 40);
+            this.button9.Location = new System.Drawing.Point(484, 85);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 26;
@@ -604,7 +604,7 @@ namespace J2i.Net.XnaXboxController
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(604, 59);
+            this.label10.Location = new System.Drawing.Point(604, 104);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(19, 13);
             this.label10.TabIndex = 27;
@@ -612,7 +612,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(468, 7);
+            this.button10.Location = new System.Drawing.Point(607, 48);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
             this.button10.TabIndex = 28;
@@ -622,7 +622,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(565, 134);
+            this.button11.Location = new System.Drawing.Point(565, 179);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 23);
             this.button11.TabIndex = 29;
