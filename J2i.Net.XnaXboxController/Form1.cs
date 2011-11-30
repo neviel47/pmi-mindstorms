@@ -50,7 +50,7 @@ namespace J2i.Net.XnaXboxController
         private NxtMotor MotorClip;
         private NxtTouchSensor touchSensorRight = null;
         private NxtTouchSensor touchSensorLeft = null;
-        private NxtSensor ColorSensor;
+        private Nxt2ColorSensor ColorSensor = null;
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
@@ -105,9 +105,10 @@ namespace J2i.Net.XnaXboxController
                     touchSensorLeft = new NxtTouchSensor();
                     mainBrick.Sensor4 = touchSensorLeft;
 
-                    //COLOR SENSOR
-                    mainBrick.Sensor2 = new Nxt2ColorSensor();
-                    ColorSensor = mainBrick.Sensor2;
+					//COLOR SENSOR
+                    ColorSensor = new Nxt2ColorSensor();
+                    mainBrick.Sensor2 = ColorSensor;
+
                    
                     //CONNECTION
                     mainBrick.Connect();
@@ -338,7 +339,7 @@ namespace J2i.Net.XnaXboxController
         {
             if (ColorSensor != null)
             {
-                
+                lblColor.Text = ColorSensor.Color.Value.ToString();
             }
         }
         #endregion
@@ -515,8 +516,6 @@ namespace J2i.Net.XnaXboxController
         {
             IdentifyColor();
         }
-
-
 
     }
 }
