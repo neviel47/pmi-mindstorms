@@ -12,6 +12,8 @@ using System.Configuration;
 //using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
 //MindSqualls
 using NKH.MindSqualls;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace J2i.Net.XnaXboxController
 {
@@ -46,7 +48,12 @@ namespace J2i.Net.XnaXboxController
         private NxtMotor MotorRight;
         private NxtMotor MotorLeft;
         private NxtMotor MotorClip;
+<<<<<<< .mine
+        private NxtTouchSensor touchSensorRight = null;
+        private NxtTouchSensor touchSensorLeft = null;
+=======
         private NxtSensor ColorSensor;
+>>>>>>> .r7
         /// <summary>
         /// Power value from 1 to 10 (*10 for using)
         /// </summary>
@@ -60,6 +67,10 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// 
         /// </summary>
+        private string lastUsedMethod;
+        /// <summary>
+        /// 
+        /// </summary>
         public XnaInputForm()
         {
             InitializeComponent();
@@ -67,6 +78,7 @@ namespace J2i.Net.XnaXboxController
         }
 
         #region NXT
+
         /// <summary>
         /// 
         /// </summary>
@@ -78,14 +90,23 @@ namespace J2i.Net.XnaXboxController
             {
                 byte comPort = 0;
                 byte.TryParse(ConfigurationManager.AppSettings["PortCom"].ToString(), out comPort);
-                if (comPort != null || comPort == 0)
+                if (comPort != 0)
                 {
                     //mainBrick = new NxtBrick(comPort);
                     mainBrick = new NxtBrick(NxtCommLinkType.USB, 5);
                     mainBrick.MotorA = new NxtMotor();
                     mainBrick.MotorB = new NxtMotor();
                     mainBrick.MotorC = new NxtMotor();
+<<<<<<< .mine
+
+                    touchSensorRight = new NxtTouchSensor();
+                    mainBrick.Sensor1 = touchSensorRight;
+                    touchSensorLeft = new NxtTouchSensor();
+                    mainBrick.Sensor2 = touchSensorLeft;
+
+=======
                     mainBrick.Sensor2 = new Nxt2ColorSensor();
+>>>>>>> .r7
                     MotorRight = mainBrick.MotorB;
                     MotorLeft = mainBrick.MotorC;
                     MotorClip = mainBrick.MotorA;
@@ -93,7 +114,15 @@ namespace J2i.Net.XnaXboxController
                     ColorSensor = mainBrick.Sensor2;
                     mainBrick.Connect();
                     initialPower = 10;
-                    clipMaxDegrees = 50;
+                    clipMaxDegrees = 40;
+
+                    string s = mainBrick.Sounds[0].ToString();
+                    // Events
+                    touchSensorRight.OnPressed += new NxtSensorEvent(TouchedOnRight);
+                    touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
+                    touchSensorRight.PollInterval = 100;
+
+                   // touchSensor.OnReleased += new NxtSensorEvent(Stop);
                 }
                 else
                 {
@@ -150,57 +179,74 @@ namespace J2i.Net.XnaXboxController
         /// <summary>
         /// To make the robot move forward
         /// </summary>
-        private void Run()
+        public void Run(int power, uint limit)
         {
             if (MotorPair != null)
             {
-                if (initialPower != null || initialPower != 0)
+                if (power != 0)
                 {
-                    MotorPair.Run((sbyte)initialPower, 0, 0);
+                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Run"))
+                        MotorPair.Brake();
+                    MotorLeft.Run((sbyte)initialPower, limit);
+                    MotorRight.Run((sbyte)initialPower, limit);
+                    //MotorPair.Run((sbyte)initialPower, 0, 0);
                 }
             }
+            lastUsedMethod = "Run";
         }
 
 
-        private void Back()
+        public void Back(int power, uint limit)
         {
             if (MotorPair != null)
             {
-                if (initialPower != null || initialPower != 0)
+                if (power != 0)
                 {
-                    MotorPair.Run((sbyte)-initialPower, 0, 0);
+                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Back"))
+                        MotorPair.Brake();
+                    //MotorPair.Run((sbyte)-initialPower, 0, 0);
+                    MotorLeft.Run((sbyte)-initialPower, limit);
+                    MotorRight.Run((sbyte)-initialPower, limit);
                 }
             }
+            lastUsedMethod = "Back";
+
         }
 
         /// <summary>
         /// Turn on the right side
         /// </summary>
-        private void TurnRight()
+        public void TurnRight()
         {
             if (MotorPair != null)
             {
-                if (initialPower != null || initialPower != 0)
+                if (initialPower != 0)
                 {
-                    MotorRight.Run((sbyte)initialPower, 0);
-                    MotorLeft.Run((sbyte)-initialPower, 0);
+                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnRight"))
+                        MotorPair.Brake();
+                    MotorRight.Run((sbyte)-initialPower, 0);
+                    MotorLeft.Run((sbyte)initialPower, 0);
                 }
             }
+            lastUsedMethod = "TurnRight";
         }
 
         /// <summary>
         ///  Turn on the left side
         /// </summary>
-        private void TurnLeft()
+        public void TurnLeft()
         {
             if (MotorPair != null)
             {
-                if (initialPower != null || initialPower != 0)
+                if (initialPower != 0)
                 {
-                    MotorLeft.Run((sbyte)initialPower, 0);
-                    MotorRight.Run((sbyte)-initialPower, 0);
+                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnLeft"))
+                        MotorPair.Brake();
+                    MotorLeft.Run((sbyte)-initialPower, 0);
+                    MotorRight.Run((sbyte)initialPower, 0);
                 }
             }
+            lastUsedMethod = "TurnLeft";
         }
 
         /// <summary>
@@ -210,8 +256,21 @@ namespace J2i.Net.XnaXboxController
         {
             if (MotorPair != null)
             {
-                MotorPair.Idle();
+                MotorPair.Brake();
             }
+        }
+
+        private void TouchedOnRight(NxtPollable polledItem)
+        {
+            Stop();
+           
+            //mainBrick.PlaySoundfile("Watch Out.rso");
+        }
+
+        private void TouchedOnLeft(NxtPollable polledItem)
+        {
+            Stop();
+            mainBrick.PlaySoundfile("Shout.rso");
         }
 
         /// <summary>
@@ -224,8 +283,18 @@ namespace J2i.Net.XnaXboxController
                 initialPower = 100;
             if (MotorPair != null)
             {
-                Run();
+                InvokeMethod(lastUsedMethod);
             }
+        }
+
+        private void InvokeMethod(string methodName)
+        {
+            // Get the desired method by name: DisplayName
+            MethodInfo methodInfo =
+               typeof(XnaInputForm).GetMethod(methodName);
+
+            // Use the instance to call the method without arguments
+            methodInfo.Invoke(this, null);
         }
 
         /// <summary>
@@ -238,7 +307,7 @@ namespace J2i.Net.XnaXboxController
                 initialPower = 0;
             if (MotorPair != null)
             {
-                Run();
+                InvokeMethod(lastUsedMethod);
             }
         }
 
@@ -263,6 +332,9 @@ namespace J2i.Net.XnaXboxController
                 MotorClip.Run(-40, clipMaxDegrees);
             }
         }
+<<<<<<< .mine
+
+=======
 
         /// <summary>
         /// Identify the color
@@ -274,6 +346,7 @@ namespace J2i.Net.XnaXboxController
                 
             }
         }
+>>>>>>> .r7
         #endregion
 
         /// <summary>
@@ -392,13 +465,13 @@ namespace J2i.Net.XnaXboxController
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Run();
+            Run(initialPower, 0);
             label10.Text = initialPower.ToString();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Back();
+            Back(initialPower, 0);
             label10.Text = initialPower.ToString();
         }
 
