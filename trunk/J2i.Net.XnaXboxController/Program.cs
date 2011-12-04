@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace J2i.Net.XnaXboxController
+namespace MindstormsController
 {
     static class Program
     {

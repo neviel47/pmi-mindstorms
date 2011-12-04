@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J2i.Net.XnaXboxController", "J2i.Net.XnaXboxController\J2i.Net.XnaXboxController.csproj", "{6BBC015C-5D26-4BDC-9A5A-EDCF4DB1175F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindstormsController", "J2i.Net.XnaXboxController\MindstormsController.csproj", "{6BBC015C-5D26-4BDC-9A5A-EDCF4DB1175F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

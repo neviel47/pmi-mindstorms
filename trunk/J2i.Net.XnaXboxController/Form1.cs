@@ -1,308 +1,85 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Configuration;
 using System.Reflection;
-using System.Diagnostics;
-//XNA Xbox360 Controller
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Input = Microsoft.Xna.Framework.Input; // to provide shorthand to clear up ambiguities
-//MindSqualls
+using System.Windows.Forms;
 using NKH.MindSqualls;
-using NKH.MindSqualls.MotorControl;
 
 
-namespace J2i.Net.XnaXboxController
+
+namespace MindstormsController
 {
 
     public partial class XnaInputForm : Form
     {
-        //To keep track of the current and previous state of the gamepad
-        /// <summary>
-        /// The current state of the controller
-        /// </summary>
-        GamePadState gamePadState;
-        /// <summary>
-        /// The previous state of the controller
-        /// </summary>
-        GamePadState previousState;
-        /// <summary>
-        /// Keeps track of the current controller
-        /// </summary>
-        PlayerIndex playerIndex = PlayerIndex.One;
-        /// <summary>
-        /// Counter for limiting the time for which the vibration motors are on.
-        /// </summary>
-        int vibrationCountdown = 0;
-        /// <summary>
-        /// The NXT main brick
-        /// </summary>
-        private NxtBrick mainBrick;
-        /// <summary>
-        /// A motor pair to combine 2 motors
-        /// </summary>
-        private NxtMotorSync motorPair;
-        private NxtMotor motorRight;
-        private NxtMotor motorLeft;
-        private NxtMotor motorClip;
-        private NxtTouchSensor touchSensorRight = null;
-        private NxtTouchSensor touchSensorLeft = null;
-        private Nxt2ColorSensor colorSensor = null;
-        /// <summary>
-        /// Power value from 1 to 10 (*10 for using)
-        /// </summary>
-        private int initialPower;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private uint clipMaxDegrees;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string lastUsedMethod;
-        /// <summary>
-        /// 
+        /// Form Constructor
         /// </summary>
         public XnaInputForm()
         {
             InitializeComponent();
-
         }
 
-        #region NXT
+        bool otherColorFounded = false;
+        bool firstRun = false;
+        System.Threading.Timer timer;
+        System.Threading.TimerCallback cb;
+        public delegate void Del();
+        int timerCount = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Connect(object sender, EventArgs e)
+        private void UpdateLabel(string lastUsed)
         {
-            try
+            this.Invoke((MethodInvoker)delegate
             {
-                byte comPort = 0;
-                byte.TryParse(ConfigurationManager.AppSettings["PortCom"].ToString(), out comPort);
-                if (comPort != 0)
-                {
-                    //MOTOR
-                    mainBrick = new NxtBrick(NxtCommLinkType.USB, 5);
-                    mainBrick.MotorA = new NxtMotor();
-                    mainBrick.MotorB = new NxtMotor();
-                    mainBrick.MotorC = new NxtMotor();
-                    motorRight = mainBrick.MotorB;
-                    motorLeft = mainBrick.MotorC;
-                    motorClip = mainBrick.MotorA;
-                    motorPair = new NxtMotorSync(motorRight, motorLeft);
-
-                    //TOUCH SENSOR
-                    touchSensorRight = new NxtTouchSensor();
-                    mainBrick.Sensor1 = touchSensorRight;
-                    touchSensorLeft = new NxtTouchSensor();
-                    mainBrick.Sensor4 = touchSensorLeft;
-
-                    //COLOR SENSOR
-                    colorSensor = new Nxt2ColorSensor();
-                    mainBrick.Sensor2 = colorSensor;
-
-
-                    //CONNECTION
-                    mainBrick.Connect();
-                    mainBrick.PlaySoundfile("Hello.rso");
-                    lblNotConnected.Text = "Connected";
-                    initialPower = 10;
-                    clipMaxDegrees = 40;
-
-                    //EVENTS
-                    touchSensorRight.OnPressed += new NxtSensorEvent(TouchedOnRight);
-                    touchSensorRight.PollInterval = 100;
-                    touchSensorLeft.OnPressed += new NxtSensorEvent(TouchedOnLeft);
-                    touchSensorLeft.PollInterval = 100;
-                    colorSensor.SetColorDetectorMode();
-                    colorSensor.PollInterval = 100;
-                   // colorSensor.OnInsideRange += new NxtSensorEvent(IdentifyColor);
-                   // colorSensor.OnPolled += new Polled(IdentifyColor);
-                    //touchSensor.OnReleased += new NxtSensorEvent(Stop);
-                }
-                else
-                {
-                    lblNotConnected.Text = "Please define a COM Port in app.config";
-                }
-            }
-            catch (Exception ex)
-            {
-                //Disconnect();
-                lblNotConnected.Text = "Connection Error ! Wrong COM Port or Any NXT!";
-            }
+                lblNotConnected.Text = lastUsedMethod = lastUsed;
+            });
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Disconnect()
+        private void Tick(object o)
         {
-
-            Idle();
-
-            if (mainBrick != null && mainBrick.IsConnected)
+            timerCount++;
+            this.Invoke((MethodInvoker)delegate
             {
-                mainBrick.PlaySoundfile("Have A Nice Day.rso");
-                motorPair = null;
-                motorRight = null;
-                motorLeft = null;
-                motorClip = null;
-                colorSensor = null;
-                touchSensorLeft = null;
-                touchSensorRight = null;
-                mainBrick = null;
-                lblNotConnected.Text = "Disconnected";
-            }
+                lblTick.Text = timerCount.ToString(); // runs on UI thread
+            });
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Idle()
+        private void followBlack_Click(object sender, EventArgs e)
         {
-            if (mainBrick != null && mainBrick.IsConnected)
-            {
-                motorRight.Idle();
-                motorLeft.Idle();
-                motorClip.Idle();
-            }
+            colorSensor.OnPolled += new Polled(IdentifyColorEvent);
         }
-
-        #endregion
-
-        #region Actions
-
-        /// <summary>
-        /// To make the robot move forward
-        /// </summary>
-        //public void Run()
-        //{
-        //    Run(initialPower, 0);
-        //}
-        public void Run(int power, uint limit)
+        private void btnLight_Click(object sender, EventArgs e)
         {
-            if (motorPair != null)
-            {
-                if (power != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Run"))
-                        motorPair.Brake();
-                    motorLeft.Run((sbyte)initialPower, limit);
-                    motorRight.Run((sbyte)initialPower, limit);
-                    //MotorPair.Run((sbyte)initialPower, 0, 0);
-                }
-            }
-            lastUsedMethod = "Run";
-        }
+            ultraSonicSensor = new NxtUltrasonicSensor();
+            mainBrick.Sensor2 = ultraSonicSensor;
+            ultraSonicSensor.SetContinuousMeasurementInterval(1);
 
-        //public void Back()
-        //{
-        //    Back(initialPower, 0);
-        //}
-        public void Back(int power, uint limit)
-        {
-            if (motorPair != null)
-            {
-                if (power != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Back"))
-                        motorPair.Brake();
-                    //MotorPair.Run((sbyte)-initialPower, 0, 0);
-                    motorLeft.Run((sbyte)-initialPower, limit);
-                    motorRight.Run((sbyte)-initialPower, limit);
-                }
-            }
-            lastUsedMethod = "Back";
+            ultraSonicSensor.ContinuousMeasurementCommand();
+            ultraSonicSensor.EventCaptureCommand();
+            byte? i = ultraSonicSensor.ReadActualScaleDivisor();
+            byte? j = ultraSonicSensor.ReadActualScaleFactor();
+            byte? k = ultraSonicSensor.ReadActualZero();
+            byte? l = ultraSonicSensor.ReadCommandState();
+            byte? m = ultraSonicSensor.ReadContinuousMeasurementsInterval();
+            byte? n = ultraSonicSensor.ReadFactoryScaleDivisor();
+            byte? o = ultraSonicSensor.ReadFactoryScaleFactor();
+            string p = ultraSonicSensor.ReadMeasurementUnits();
+
+
+
+
+            lblIntensity.Text = ultraSonicSensor.DistanceCm.Value.ToString();
+
+            /*lightSensor = new NxtLightSensor();
+            mainBrick.Sensor2 = lightSensor;
+            lightSensor.Poll();
+            lblColor.Text = lightSensor.GenerateLight.ToString();
+            lblIntensity.Text = lightSensor.Intensity.Value.ToString();
+            lblTriggerIntensity.Text = lightSensor.ThresholdIntensity.ToString();*/
 
         }
 
         /// <summary>
-        /// Turn on the right side
+        /// Invoke a method by name
         /// </summary>
-        public void TurnRight()
-        {
-            if (motorPair != null)
-            {
-                if (initialPower != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnRight"))
-                        motorPair.Brake();
-                    motorRight.Run((sbyte)-initialPower, 0);
-                    motorLeft.Run((sbyte)initialPower, 0);
-                }
-            }
-            lastUsedMethod = "TurnRight";
-        }
-
-        /// <summary>
-        ///  Turn on the left side
-        /// </summary>
-        public void TurnLeft()
-        {
-            if (motorPair != null)
-            {
-                if (initialPower != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnLeft"))
-                        motorPair.Brake();
-                    motorLeft.Run((sbyte)-initialPower, 0);
-                    motorRight.Run((sbyte)initialPower, 0);
-                }
-            }
-            lastUsedMethod = "TurnLeft";
-        }
-
-        /// <summary>
-        /// Stop movement motors
-        /// </summary>
-        private void Stop()
-        {
-            if (motorPair != null)
-            {
-                motorPair.Brake();
-            }
-        }
-
-        private void TouchedOnRight(NxtPollable polledItem)
-        {
-            Stop();
-            mainBrick.PlaySoundfile("Ouch 02.rso");
-        }
-
-        private void TouchedOnLeft(NxtPollable polledItem)
-        {
-            Stop();
-            mainBrick.PlaySoundfile("Woops.rso");
-        }
-
-        /// <summary>
-        /// Increase movement speed
-        /// </summary>
-        private void Turbo()
-        {
-            initialPower = initialPower + 10;
-            if (initialPower > 100)
-                initialPower = 100;
-            if (motorPair != null)
-            {
-                InvokeMethod(lastUsedMethod);
-            }
-        }
-
+        /// <param name="methodName">The method name</param>
         private void InvokeMethod(string methodName)
         {
             if (!string.IsNullOrEmpty(methodName))
@@ -313,9 +90,9 @@ namespace J2i.Net.XnaXboxController
                 try
                 {
                     object[] param = null;
-                    if(lastUsedMethod.Equals("Run")||lastUsedMethod.Equals("Back"))
+                    if (lastUsedMethod.Equals("Run") || lastUsedMethod.Equals("Back"))
                     {
-                         param = new object[]{initialPower, (uint)0};
+                        param = new object[] { initialPower, (uint)0 };
                     }
                     methodInfo.Invoke(this, param);
                 }
@@ -327,225 +104,18 @@ namespace J2i.Net.XnaXboxController
         }
 
         /// <summary>
-        /// Decrease movement speed
-        /// </summary>
-        private void Brake()
-        {
-            initialPower = initialPower - 10;
-            if (initialPower < 0)
-                initialPower = 0;
-            if (motorPair != null)
-            {
-                InvokeMethod(lastUsedMethod);
-            }
-        }
-
-        /// <summary>
-        /// Open the clip
-        /// </summary>
-        private void OpenClip()
-        {
-            if (motorClip != null)
-            {
-                motorClip.Run(40, clipMaxDegrees);
-            }
-        }
-
-        /// <summary>
-        /// Close the clip
-        /// </summary>
-        private void CloseClip()
-        {
-            if (motorClip != null)
-            {
-                motorClip.Run(-40, clipMaxDegrees);
-            }
-        }
-
-        /// <summary>
-        /// Identify the color
-        /// </summary>
-        private void IdentifyColor()
-        {
-            if (colorSensor != null)
-            {
-               lblColor.Text = colorSensor.Color.Value.ToString();
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// When a new controller is selected from the drop down
-        /// update the player index and turn off all the vibration motors. 
+        /// Action to do when on the form closing
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-        private void ddlController_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (this.ddlController.SelectedIndex)
-            {
-                case 0: playerIndex = PlayerIndex.One; break;
-                case 1: playerIndex = PlayerIndex.Two; break;
-                case 2: playerIndex = PlayerIndex.Three; break;
-                case 3: playerIndex = PlayerIndex.Four; break;
-                default: playerIndex = PlayerIndex.One; break;
-            }
-            this.StopAllVibration();
-
-        }
-
-        private void StopAllVibration()
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
-            GamePad.SetVibration(PlayerIndex.Two, 0.0f, 0.0f);
-            GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
-            GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            GamePad.SetVibration(playerIndex, (float)this.leftMotor.Value, (float)this.rightMotor.Value);
-            vibrationCountdown = 30;
-        }
-
-        private void CheckVibrationTimeout()
-        {
-            if (vibrationCountdown > 0)
-            {
-                --vibrationCountdown;
-                if (vibrationCountdown == 0.0f)
-                {
-                    GamePad.SetVibration(playerIndex, 0.0f, 0.0f);
-                }
-            }
-        }
-
-        private void UpdateControllerState()
-        {
-            //Get the new gamepad state and save the old state.
-            this.previousState = this.gamePadState;
-            this.gamePadState = GamePad.GetState(this.playerIndex);
-            //If the controller is not connected, let the user know
-            this.lblNotConnected.Visible = !this.gamePadState.IsConnected;
-            //I personally prefer to only update the buttons if their state has been changed. 
-            if (!this.gamePadState.Buttons.Equals(this.previousState.Buttons))
-            {
-                this.buttonA.Checked = (this.gamePadState.Buttons.A == Input.ButtonState.Pressed);
-                this.buttonB.Checked = (this.gamePadState.Buttons.B == Input.ButtonState.Pressed);
-                this.buttonX.Checked = (this.gamePadState.Buttons.X == Input.ButtonState.Pressed);
-                this.buttonY.Checked = (this.gamePadState.Buttons.Y == Input.ButtonState.Pressed);
-                this.buttonLeftShoulder.Checked = (this.gamePadState.Buttons.LeftShoulder == Input.ButtonState.Pressed);
-                this.buttonRightShoulder.Checked = (this.gamePadState.Buttons.RightShoulder == Input.ButtonState.Pressed);
-                this.buttonStart.Checked = (this.gamePadState.Buttons.Start == Input.ButtonState.Pressed);
-                this.buttonBack.Checked = (this.gamePadState.Buttons.Back == Input.ButtonState.Pressed);
-                this.buttonLeftStick.Checked = (this.gamePadState.Buttons.LeftStick == Input.ButtonState.Pressed);
-                this.buttonRightStick.Checked = (this.gamePadState.Buttons.RightStick == Input.ButtonState.Pressed);
-            }
-            if (!this.gamePadState.DPad.Equals(this.previousState.DPad))
-            {
-                this.buttonUp.Checked = (this.gamePadState.DPad.Up == Input.ButtonState.Pressed);
-                this.buttonDown.Checked = (this.gamePadState.DPad.Down == Input.ButtonState.Pressed);
-                this.buttonLeft.Checked = (this.gamePadState.DPad.Left == Input.ButtonState.Pressed);
-                this.buttonRight.Checked = (this.gamePadState.DPad.Right == Input.ButtonState.Pressed);
-            }
-
-            //Update the position of the thumb sticks
-            //since the thumbsticks can return a number between -1.0 and +1.0 I had to shift (add 1.0)
-            //and scale (mutiplication by 100/2, or 50) to get the numbers to be in the range of 0-100
-            //for the progress bar
-            this.x1Position.Value = (int)((this.gamePadState.ThumbSticks.Left.X + 1.0f) * 100.0f / 2.0f);
-            this.y1Position.Value = (int)((this.gamePadState.ThumbSticks.Left.Y + 1.0f) * 100.0f / 2.0f);
-            this.x2position.Value = (int)((this.gamePadState.ThumbSticks.Right.X + 1.0f) * 100.0f / 2.0f);
-            this.y2position.Value = (int)((this.gamePadState.ThumbSticks.Right.Y + 1.0f) * 100.0f / 2.0f);
-
-            //The triggers return a value between 0.0 and 1.0.  I only needed to scale these values for
-            //the progress bar
-            this.leftTriggerPosition.Value = (int)((this.gamePadState.Triggers.Left * 100));
-            this.rightTriggerPosition.Value = (int)(this.gamePadState.Triggers.Right * 100);
-        }
-
-        //I'm updating the controller display on a timed interval. 
-        private void controllerTimer_Tick(object sender, EventArgs e)
-        {
-            this.CheckVibrationTimeout();
-            this.UpdateControllerState();
-        }
-
-        private void XnaInputForm_Load(object sender, EventArgs e)
-        {
-            this.ddlController.SelectedIndex = 0;
-            this.controllerTimer.Start();
-        }
-
         private void XnaInputForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.StopAllVibration();
         }
 
-
-        private void button6_Click(object sender, EventArgs e)
+        private void Stop(object sender, MouseEventArgs e)
         {
-            Run(initialPower, 0);
-            label10.Text = initialPower.ToString();
+            Stop();
         }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            Back(initialPower, 0);
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            TurnRight();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            TurnLeft();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            OpenClip();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            CloseClip();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Turbo();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            Brake();
-            label10.Text = initialPower.ToString();
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            Disconnect();
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            Idle();
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-           IdentifyColor();
-        }
-
     }
 }

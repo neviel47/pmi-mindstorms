@@ -1,4 +1,4 @@
-namespace J2i.Net.XnaXboxController
+namespace MindstormsController
 {
     partial class XnaInputForm
     {
@@ -55,7 +55,7 @@ namespace J2i.Net.XnaXboxController
             this.x1Position = new System.Windows.Forms.ProgressBar();
             this.leftMotor = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnVibrate = new System.Windows.Forms.Button();
             this.rightMotor = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,19 +69,30 @@ namespace J2i.Net.XnaXboxController
             this.buttonDown = new System.Windows.Forms.CheckBox();
             this.buttonUp = new System.Windows.Forms.CheckBox();
             this.BtnConnect = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
+            this.btnTurbo = new System.Windows.Forms.Button();
+            this.btnTurnRight = new System.Windows.Forms.Button();
+            this.btnTurnLeft = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.btnBrake = new System.Windows.Forms.Button();
+            this.btnCloseClip = new System.Windows.Forms.Button();
+            this.btnOpenClip = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.btnIdle = new System.Windows.Forms.Button();
+            this.btnIdentifyColor = new System.Windows.Forms.Button();
             this.lblColor = new System.Windows.Forms.Label();
+            this.btnRunRight = new System.Windows.Forms.Button();
+            this.btnRunLeft = new System.Windows.Forms.Button();
+            this.btnBackLeft = new System.Windows.Forms.Button();
+            this.btnBackRight = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.pbPower = new System.Windows.Forms.ProgressBar();
+            this.lblIntensity = new System.Windows.Forms.Label();
+            this.lblTriggerIntensity = new System.Windows.Forms.Label();
+            this.followBlack = new System.Windows.Forms.Button();
+            this.lblTick = new System.Windows.Forms.Label();
+            this.btnLight = new System.Windows.Forms.Button();
+            this.gbManualControls = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftMotor)).BeginInit();
@@ -361,7 +372,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.btnVibrate);
             this.groupBox3.Controls.Add(this.rightMotor);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.leftMotor);
@@ -373,15 +384,14 @@ namespace J2i.Net.XnaXboxController
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Vibration Motors";
             // 
-            // button1
+            // btnVibrate
             // 
-            this.button1.Location = new System.Drawing.Point(24, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "&Vibrate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnVibrate.Location = new System.Drawing.Point(24, 70);
+            this.btnVibrate.Name = "btnVibrate";
+            this.btnVibrate.Size = new System.Drawing.Size(75, 23);
+            this.btnVibrate.TabIndex = 14;
+            this.btnVibrate.Text = "&Vibrate";
+            this.btnVibrate.UseVisualStyleBackColor = true;
             // 
             // rightMotor
             // 
@@ -451,7 +461,7 @@ namespace J2i.Net.XnaXboxController
             // 
             this.lblNotConnected.AutoSize = true;
             this.lblNotConnected.ForeColor = System.Drawing.Color.Red;
-            this.lblNotConnected.Location = new System.Drawing.Point(207, 12);
+            this.lblNotConnected.Location = new System.Drawing.Point(235, 12);
             this.lblNotConnected.Name = "lblNotConnected";
             this.lblNotConnected.Size = new System.Drawing.Size(131, 13);
             this.lblNotConnected.TabIndex = 16;
@@ -513,7 +523,7 @@ namespace J2i.Net.XnaXboxController
             // 
             // BtnConnect
             // 
-            this.BtnConnect.Location = new System.Drawing.Point(526, 48);
+            this.BtnConnect.Location = new System.Drawing.Point(565, 7);
             this.BtnConnect.Name = "BtnConnect";
             this.BtnConnect.Size = new System.Drawing.Size(75, 23);
             this.BtnConnect.TabIndex = 18;
@@ -521,152 +531,277 @@ namespace J2i.Net.XnaXboxController
             this.BtnConnect.UseVisualStyleBackColor = true;
             this.BtnConnect.Click += new System.EventHandler(this.Connect);
             // 
-            // button2
+            // btnTurbo
             // 
-            this.button2.Location = new System.Drawing.Point(639, 85);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Turbo";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnTurbo.Location = new System.Drawing.Point(639, 120);
+            this.btnTurbo.Name = "btnTurbo";
+            this.btnTurbo.Size = new System.Drawing.Size(75, 23);
+            this.btnTurbo.TabIndex = 19;
+            this.btnTurbo.Text = "Turbo";
+            this.btnTurbo.UseVisualStyleBackColor = true;
+            this.btnTurbo.Click += new System.EventHandler(this.btnTurbo_Click);
             // 
-            // button3
+            // btnTurnRight
             // 
-            this.button3.Location = new System.Drawing.Point(646, 236);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "Turn Right";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnTurnRight.Location = new System.Drawing.Point(639, 229);
+            this.btnTurnRight.Name = "btnTurnRight";
+            this.btnTurnRight.Size = new System.Drawing.Size(75, 23);
+            this.btnTurnRight.TabIndex = 20;
+            this.btnTurnRight.Text = "Turn Right";
+            this.btnTurnRight.UseVisualStyleBackColor = true;
+            this.btnTurnRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnTurnRight_Click);
+            this.btnTurnRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
             // 
-            // button4
+            // btnTurnLeft
             // 
-            this.button4.Location = new System.Drawing.Point(484, 236);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 21;
-            this.button4.Text = "Turn Left";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnTurnLeft.Location = new System.Drawing.Point(477, 229);
+            this.btnTurnLeft.Name = "btnTurnLeft";
+            this.btnTurnLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnTurnLeft.TabIndex = 21;
+            this.btnTurnLeft.Text = "Turn Left";
+            this.btnTurnLeft.UseVisualStyleBackColor = true;
+            this.btnTurnLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnTurnLeft_Click);
+            this.btnTurnLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
             // 
-            // button5
+            // btnBack
             // 
-            this.button5.Location = new System.Drawing.Point(565, 236);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 22;
-            this.button5.Text = "Back";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.btnBack.Location = new System.Drawing.Point(558, 258);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnBack_Click);
+            this.btnBack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
             // 
-            // button6
+            // btnRun
             // 
-            this.button6.Location = new System.Drawing.Point(565, 207);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 23;
-            this.button6.Text = "Run";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.btnRun.Location = new System.Drawing.Point(558, 200);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.TabIndex = 23;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRun_Click);
+            this.btnRun.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
             // 
-            // button7
+            // btnBrake
             // 
-            this.button7.Location = new System.Drawing.Point(639, 114);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 24;
-            this.button7.Text = "Brake";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.btnBrake.Location = new System.Drawing.Point(477, 120);
+            this.btnBrake.Name = "btnBrake";
+            this.btnBrake.Size = new System.Drawing.Size(75, 23);
+            this.btnBrake.TabIndex = 24;
+            this.btnBrake.Text = "Brake";
+            this.btnBrake.UseVisualStyleBackColor = true;
+            this.btnBrake.Click += new System.EventHandler(this.btnBrake_Click);
             // 
-            // button8
+            // btnCloseClip
             // 
-            this.button8.Location = new System.Drawing.Point(484, 114);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 25;
-            this.button8.Text = "Close Clip";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.btnCloseClip.Location = new System.Drawing.Point(639, 149);
+            this.btnCloseClip.Name = "btnCloseClip";
+            this.btnCloseClip.Size = new System.Drawing.Size(75, 23);
+            this.btnCloseClip.TabIndex = 25;
+            this.btnCloseClip.Text = "Close Clip";
+            this.btnCloseClip.UseVisualStyleBackColor = true;
+            this.btnCloseClip.Click += new System.EventHandler(this.btnCloseClip_Click);
             // 
-            // button9
+            // btnOpenClip
             // 
-            this.button9.Location = new System.Drawing.Point(484, 85);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 26;
-            this.button9.Text = "Open Clip";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(604, 104);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(19, 13);
-            this.label10.TabIndex = 27;
-            this.label10.Text = "10";
+            this.btnOpenClip.Location = new System.Drawing.Point(477, 149);
+            this.btnOpenClip.Name = "btnOpenClip";
+            this.btnOpenClip.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenClip.TabIndex = 26;
+            this.btnOpenClip.Text = "Open Clip";
+            this.btnOpenClip.UseVisualStyleBackColor = true;
+            this.btnOpenClip.Click += new System.EventHandler(this.btnOpenClip_Click);
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(607, 48);
+            this.button10.Location = new System.Drawing.Point(646, 7);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
             this.button10.TabIndex = 28;
             this.button10.Text = "Disconnect";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.Disconnect);
             // 
-            // button11
+            // btnIdle
             // 
-            this.button11.Location = new System.Drawing.Point(565, 179);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 29;
-            this.button11.Text = "Idle";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.btnIdle.Location = new System.Drawing.Point(558, 120);
+            this.btnIdle.Name = "btnIdle";
+            this.btnIdle.Size = new System.Drawing.Size(75, 23);
+            this.btnIdle.TabIndex = 29;
+            this.btnIdle.Text = "Idle";
+            this.btnIdle.UseVisualStyleBackColor = true;
+            this.btnIdle.Click += new System.EventHandler(this.Idle);
             // 
-            // button12
+            // btnIdentifyColor
             // 
-            this.button12.Location = new System.Drawing.Point(484, 296);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
-            this.button12.TabIndex = 30;
-            this.button12.Text = "Identify color";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.btnIdentifyColor.Location = new System.Drawing.Point(477, 296);
+            this.btnIdentifyColor.Name = "btnIdentifyColor";
+            this.btnIdentifyColor.Size = new System.Drawing.Size(75, 23);
+            this.btnIdentifyColor.TabIndex = 30;
+            this.btnIdentifyColor.Text = "Identify color";
+            this.btnIdentifyColor.UseVisualStyleBackColor = true;
+            this.btnIdentifyColor.Click += new System.EventHandler(this.btnIdentifyColor_Click);
             // 
             // lblColor
             // 
             this.lblColor.AutoSize = true;
-            this.lblColor.Location = new System.Drawing.Point(565, 301);
+            this.lblColor.Location = new System.Drawing.Point(568, 301);
             this.lblColor.Name = "lblColor";
             this.lblColor.Size = new System.Drawing.Size(31, 13);
             this.lblColor.TabIndex = 31;
             this.lblColor.Text = "Color";
+            // 
+            // btnRunRight
+            // 
+            this.btnRunRight.Location = new System.Drawing.Point(639, 200);
+            this.btnRunRight.Name = "btnRunRight";
+            this.btnRunRight.Size = new System.Drawing.Size(75, 23);
+            this.btnRunRight.TabIndex = 32;
+            this.btnRunRight.Text = "Run Right";
+            this.btnRunRight.UseVisualStyleBackColor = true;
+            this.btnRunRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRunRight_Click);
+            this.btnRunRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
+            // 
+            // btnRunLeft
+            // 
+            this.btnRunLeft.Location = new System.Drawing.Point(477, 200);
+            this.btnRunLeft.Name = "btnRunLeft";
+            this.btnRunLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnRunLeft.TabIndex = 33;
+            this.btnRunLeft.Text = "RunLeft";
+            this.btnRunLeft.UseVisualStyleBackColor = true;
+            this.btnRunLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRunLeft_Click);
+            this.btnRunLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
+            // 
+            // btnBackLeft
+            // 
+            this.btnBackLeft.Location = new System.Drawing.Point(477, 258);
+            this.btnBackLeft.Name = "btnBackLeft";
+            this.btnBackLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnBackLeft.TabIndex = 34;
+            this.btnBackLeft.Text = "BackLeft";
+            this.btnBackLeft.UseVisualStyleBackColor = true;
+            this.btnBackLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnBackLeft_Click);
+            this.btnBackLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
+            // 
+            // btnBackRight
+            // 
+            this.btnBackRight.Location = new System.Drawing.Point(639, 258);
+            this.btnBackRight.Name = "btnBackRight";
+            this.btnBackRight.Size = new System.Drawing.Size(75, 23);
+            this.btnBackRight.TabIndex = 35;
+            this.btnBackRight.Text = "BackRight";
+            this.btnBackRight.UseVisualStyleBackColor = true;
+            this.btnBackRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnBackRight_Click);
+            this.btnBackRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Stop);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(558, 229);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 36;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Stop);
+            // 
+            // pbPower
+            // 
+            this.pbPower.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPower.Location = new System.Drawing.Point(477, 85);
+            this.pbPower.Name = "pbPower";
+            this.pbPower.Size = new System.Drawing.Size(237, 23);
+            this.pbPower.TabIndex = 37;
+            // 
+            // lblIntensity
+            // 
+            this.lblIntensity.AutoSize = true;
+            this.lblIntensity.Location = new System.Drawing.Point(568, 326);
+            this.lblIntensity.Name = "lblIntensity";
+            this.lblIntensity.Size = new System.Drawing.Size(46, 13);
+            this.lblIntensity.TabIndex = 38;
+            this.lblIntensity.Text = "Intensity";
+            // 
+            // lblTriggerIntensity
+            // 
+            this.lblTriggerIntensity.AutoSize = true;
+            this.lblTriggerIntensity.Location = new System.Drawing.Point(568, 355);
+            this.lblTriggerIntensity.Name = "lblTriggerIntensity";
+            this.lblTriggerIntensity.Size = new System.Drawing.Size(79, 13);
+            this.lblTriggerIntensity.TabIndex = 39;
+            this.lblTriggerIntensity.Text = "IntensityTrigger";
+            // 
+            // followBlack
+            // 
+            this.followBlack.Location = new System.Drawing.Point(477, 325);
+            this.followBlack.Name = "followBlack";
+            this.followBlack.Size = new System.Drawing.Size(75, 47);
+            this.followBlack.TabIndex = 40;
+            this.followBlack.Text = "Follow the Black Rabbit";
+            this.followBlack.UseVisualStyleBackColor = true;
+            this.followBlack.Click += new System.EventHandler(this.followBlack_Click);
+            // 
+            // lblTick
+            // 
+            this.lblTick.AutoSize = true;
+            this.lblTick.Location = new System.Drawing.Point(474, 12);
+            this.lblTick.Name = "lblTick";
+            this.lblTick.Size = new System.Drawing.Size(31, 13);
+            this.lblTick.TabIndex = 41;
+            this.lblTick.Text = "TICK";
+            // 
+            // btnLight
+            // 
+            this.btnLight.Location = new System.Drawing.Point(477, 376);
+            this.btnLight.Name = "btnLight";
+            this.btnLight.Size = new System.Drawing.Size(75, 23);
+            this.btnLight.TabIndex = 42;
+            this.btnLight.Text = "Light !";
+            this.btnLight.UseVisualStyleBackColor = true;
+            this.btnLight.Click += new System.EventHandler(this.btnLight_Click);
+            // 
+            // gbManualControls
+            // 
+            this.gbManualControls.Enabled = false;
+            this.gbManualControls.Location = new System.Drawing.Point(468, 53);
+            this.gbManualControls.Name = "gbManualControls";
+            this.gbManualControls.Size = new System.Drawing.Size(253, 376);
+            this.gbManualControls.TabIndex = 43;
+            this.gbManualControls.TabStop = false;
+            this.gbManualControls.Text = "Manual Controls";
             // 
             // XnaInputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 445);
+            this.Controls.Add(this.btnLight);
+            this.Controls.Add(this.lblTick);
+            this.Controls.Add(this.followBlack);
+            this.Controls.Add(this.lblTriggerIntensity);
+            this.Controls.Add(this.lblIntensity);
+            this.Controls.Add(this.pbPower);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnBackRight);
+            this.Controls.Add(this.btnBackLeft);
+            this.Controls.Add(this.btnRunLeft);
+            this.Controls.Add(this.btnRunRight);
             this.Controls.Add(this.lblColor);
-            this.Controls.Add(this.button12);
-            this.Controls.Add(this.button11);
+            this.Controls.Add(this.btnIdentifyColor);
+            this.Controls.Add(this.btnIdle);
             this.Controls.Add(this.button10);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnOpenClip);
+            this.Controls.Add(this.btnCloseClip);
+            this.Controls.Add(this.btnBrake);
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.btnTurnLeft);
+            this.Controls.Add(this.btnTurnRight);
+            this.Controls.Add(this.btnTurbo);
             this.Controls.Add(this.BtnConnect);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.lblNotConnected);
@@ -675,6 +810,7 @@ namespace J2i.Net.XnaXboxController
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbManualControls);
             this.Name = "XnaInputForm";
             this.Text = "Xbox Controller Test";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.XnaInputForm_FormClosing);
@@ -712,7 +848,7 @@ namespace J2i.Net.XnaXboxController
         private System.Windows.Forms.ProgressBar x1Position;
         private System.Windows.Forms.NumericUpDown leftMotor;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnVibrate;
         private System.Windows.Forms.NumericUpDown rightMotor;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -736,19 +872,30 @@ namespace J2i.Net.XnaXboxController
         private System.Windows.Forms.CheckBox buttonDown;
         private System.Windows.Forms.CheckBox buttonUp;
         private System.Windows.Forms.Button BtnConnect;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnTurbo;
+        private System.Windows.Forms.Button btnTurnRight;
+        private System.Windows.Forms.Button btnTurnLeft;
+        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Button btnBrake;
+        private System.Windows.Forms.Button btnCloseClip;
+        private System.Windows.Forms.Button btnOpenClip;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button btnIdle;
+        private System.Windows.Forms.Button btnIdentifyColor;
         private System.Windows.Forms.Label lblColor;
+        private System.Windows.Forms.Button btnRunRight;
+        private System.Windows.Forms.Button btnRunLeft;
+        private System.Windows.Forms.Button btnBackLeft;
+        private System.Windows.Forms.Button btnBackRight;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.ProgressBar pbPower;
+        private System.Windows.Forms.Label lblIntensity;
+        private System.Windows.Forms.Label lblTriggerIntensity;
+        private System.Windows.Forms.Button followBlack;
+        private System.Windows.Forms.Label lblTick;
+        private System.Windows.Forms.Button btnLight;
+        private System.Windows.Forms.GroupBox gbManualControls;
     }
 }
 
