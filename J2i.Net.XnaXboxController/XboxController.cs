@@ -94,7 +94,7 @@ namespace MindstormsController
             this.previousState = this.gamePadState;
             this.gamePadState = GamePad.GetState(this.playerIndex);
             //If the controller is not connected, let the user know
-            this.lblNotConnected.Visible = !this.gamePadState.IsConnected;
+            this.lblInfo.Visible = this.gamePadState.IsConnected;
             //I personally prefer to only update the buttons if their state has been changed. 
             if (!this.gamePadState.Buttons.Equals(this.previousState.Buttons))
             {
@@ -136,65 +136,73 @@ namespace MindstormsController
 
             float valueY = this.gamePadState.ThumbSticks.Left.Y;
             float valueX = this.gamePadState.ThumbSticks.Left.X;
-            if (this.gamePadState.ThumbSticks.Left.Y > 0)
+            if (valueY > 0)
             {
                 if (valueX > 0)
                 {
                     if (valueX > valueY)
                     {
-                        TurnRight();
+                        TurnRight((int)(valueX * 100), 0);
                     }
                     else
                     {
-                        RunRight((int)(valueY * 10), 0);
+                        RunRight((int)(valueY * 100), 0);
                     }
                 }
                 else if (valueX < 0)
                 {
                     if (-valueX > valueY)
                     {
-                        TurnLeft();
+                        TurnLeft((int)(valueX * 100), 0);
                     }
                     else
                     {
-                        RunLeft((int)(valueY * 10), 0);
+                        RunLeft((int)(valueY * 100), 0);
                     }
                 }
                 else if (valueX == 0)
                 {
-                    Run((int)(valueY * 10), 0);
+                    Run((int)(valueY * 100), 0);
                 }
             }
-            else if (this.gamePadState.ThumbSticks.Left.Y < 0)
+            else if (valueY < 0)
             {
                 if (valueX > 0)
                 {
-                    if (valueX > valueY)
+                    if (valueX > -valueY)
                     {
-                        TurnRight();
+                        TurnRight((int)(valueX * 100), 0);
                     }
                     else
                     {
-                        BackRight((int)(valueY * 10), 0);
+                        BackRight((int)(valueY * 100), 0);
                     }
                 }
                 else if (valueX < 0)
                 {
-                    if (-valueX > valueY)
+                    if (-valueX > -valueY)
                     {
-                        TurnLeft();
+                        TurnLeft((int)(valueX * 100), 0);
                     }
                     else
                     {
-                        BackLeft((int)(valueY * 10), 0);
+                        BackLeft((int)(valueY * 100), 0);
                     }
                 }
                 else if (valueX == 0)
                 {
-                    Back((int)(valueY * 10), 0);
+                    Run((int)(valueY * 100), 0);
                 }
             }
-            else if (this.gamePadState.ThumbSticks.Left.Y == 0)
+            else if (valueX > 0)
+            {
+                TurnRight((int)(valueX * 100), 0);
+            }
+            else if (valueX < 0)
+            {
+                TurnLeft((int)(valueX * 100), 0);
+            }
+            else if ((valueY == 0) && (valueX == 0))
             {
                 Stop();
             }
