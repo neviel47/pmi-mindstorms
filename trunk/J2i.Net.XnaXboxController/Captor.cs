@@ -61,7 +61,6 @@ namespace MindstormsController
         }
         #endregion
 
-
         #region Color Events
         /// <summary>
         /// Method to check the color

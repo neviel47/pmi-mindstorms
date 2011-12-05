@@ -114,7 +114,7 @@ namespace MindstormsController
                     if (mainBrick.IsConnected)
                     {
                         mainBrick.PlaySoundfile("Hello.rso");
-                        lblNotConnected.Text = "Connected";
+                        lblInfo.Text = "Connected";
                         updatePowerBar();
 
                         // SENSOR EVENTS
@@ -140,17 +140,17 @@ namespace MindstormsController
                     }
                     else
                     {
-                        lblNotConnected.Text = "Please define a COM Port in app.config or Turn on the robot!";
+                        lblInfo.Text = "Please define a COM Port in app.config or Turn on the robot!";
                     }
                 }
                 else
                 {
-                    lblNotConnected.Text = "Please define a COM Port in app.config";
+                    lblInfo.Text = "Please define a COM Port in app.config";
                 }
             }
             catch (Exception ex)
             {
-                lblNotConnected.Text = "Connection Error ! " + ex.Message;
+                lblInfo.Text = "Connection Error ! " + ex.Message;
             }
         }
 
@@ -174,7 +174,7 @@ namespace MindstormsController
                 touchSensorLeft = null;
                 touchSensorRight = null;
                 mainBrick = null;
-                lblNotConnected.Text = "Disconnected";
+                lblInfo.Text = "Disconnected";
             }
         }
 
@@ -198,7 +198,7 @@ namespace MindstormsController
         #region Mouvements Actions
 
         /// <summary>
-        /// To make the robot move forward
+        /// To make the robot move forward, positive power or negative power (to go back)
         /// </summary>
         public void Run(int power, uint limit)
         {
@@ -206,37 +206,19 @@ namespace MindstormsController
             {
                 if (power != 0)
                 {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Run"))
+                    if (lastUsedMethod != null && (!lastUsedMethod.Equals("Run")&&!lastUsedMethod.Equals("Back")))
                         motorPair.Brake();
-                    motorLeft.Run((sbyte)initialPower, limit);
-                    motorRight.Run((sbyte)initialPower, limit);
-                    //MotorPair.Run((sbyte)initialPower, 0, 0);
+                    motorLeft.Run((sbyte)power, limit);
+                    motorRight.Run((sbyte)power, limit);
+                    if (power > 0)
+                        UpdateLabel("Run");
+                    else
+                        UpdateLabel("Back");
                 }
             }
-            UpdateLabel("Run");
         }
-
         /// <summary>
-        /// To make the robot move back
-        /// </summary>
-        public void Back(int power, uint limit)
-        {
-            if (motorPair != null)
-            {
-                if (power != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("Back"))
-                        motorPair.Brake();
-                    //MotorPair.Run((sbyte)-initialPower, 0, 0);
-                    motorLeft.Run((sbyte)-initialPower, limit);
-                    motorRight.Run((sbyte)-initialPower, limit);
-                }
-            }
-            UpdateLabel("Back");
-        }
-
-        /// <summary>
-        /// Move Forward and turn right too !
+        /// Move Forward and turn right too, power can be + or -, it's change nothing
         /// </summary>
         public void RunRight(int power, uint limit)
         {
@@ -244,6 +226,8 @@ namespace MindstormsController
             {
                 if (power != 0)
                 {
+                    if (power < 0)
+                        power = +power;
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("RunRight"))
                         motorPair.Brake();
                     motorRight.Run((sbyte)Math.Round((double)power / turnRatio), limit);
@@ -252,10 +236,8 @@ namespace MindstormsController
             }
             UpdateLabel("RunRight");
         }
-
-
         /// <summary>
-        /// Move back and turn right too !
+        /// Move back and turn right too, power can be + or -, it's change nothing
         /// </summary>
         public void BackRight(int power, uint limit)
         {
@@ -263,6 +245,8 @@ namespace MindstormsController
             {
                 if (power != 0)
                 {
+                    if (power < 0)
+                        power = -power;
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("BackRight"))
                         motorPair.Brake();
                     motorRight.Run((sbyte)-(Math.Round((double)power / turnRatio)), limit);
@@ -271,9 +255,8 @@ namespace MindstormsController
             }
             UpdateLabel("BackRight");
         }
-
         /// <summary>
-        /// Move back and turn left too !
+        /// Move back and turn left too, power can be + or -, it's change nothing
         /// </summary>
         public void BackLeft(int power, uint limit)
         {
@@ -281,6 +264,8 @@ namespace MindstormsController
             {
                 if (power != 0)
                 {
+                    if (power < 0)
+                        power = -power;
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("BackLeft"))
                         motorPair.Brake();
                     motorLeft.Run((sbyte)-(Math.Round((double)power / turnRatio)), limit);
@@ -289,28 +274,8 @@ namespace MindstormsController
             }
             UpdateLabel("BackLeft");
         }
-
         /// <summary>
-        /// Turn on the right side
-        /// </summary>
-        public void TurnRight()
-        {
-            if (motorPair != null)
-            {
-                if (initialPower != 0)
-                {
-                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnRight"))
-                        motorPair.Brake();
-                    motorRight.Run((sbyte)-initialPower, 0);
-                    motorLeft.Run((sbyte)initialPower, 0);
-                }
-            }
-            UpdateLabel("TurnRight");
-
-        }
-
-        /// <summary>
-        /// Move Forward and turn left too !
+        /// Move Forward and turn left too, power can be + or -, it's change nothing
         /// </summary>
         public void RunLeft(int power, uint limit)
         {
@@ -318,6 +283,8 @@ namespace MindstormsController
             {
                 if (power != 0)
                 {
+                    if (power < 0)
+                        power = +power;
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("RunLeft"))
                         motorPair.Brake();
                     motorLeft.Run((sbyte)Math.Round((double)power / turnRatio), limit);
@@ -326,50 +293,64 @@ namespace MindstormsController
             }
             UpdateLabel("RunLeft");
         }
-
         /// <summary>
-        ///  Turn on the left side
+        /// Turn on the right side, power can be + or -, it's change nothing
         /// </summary>
-        public void TurnLeft()
+        public void TurnRight(int power, uint limit)
         {
             if (motorPair != null)
             {
-                if (initialPower != 0)
+                if (power != 0)
                 {
+                    if (power < 0)
+                        power = +power;
+                    if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnRight"))
+                        motorPair.Brake();
+                    motorRight.Run((sbyte)-power, limit);
+                    motorLeft.Run((sbyte)power, limit);
+                }
+            }
+            UpdateLabel("TurnRight");
+        }
+        /// <summary>
+        ///  Turn on the left side, power can be + or -, it's change nothing
+        /// </summary>
+        public void TurnLeft(int power, uint limit)
+        {
+            if (motorPair != null)
+            {
+                if (power != 0)
+                {
+                    if (power < 0)
+                        power = +power;
                     if (lastUsedMethod != null && !lastUsedMethod.Equals("TurnLeft"))
                         motorPair.Brake();
-                    motorLeft.Run((sbyte)-initialPower, 0);
-                    motorRight.Run((sbyte)initialPower, 0);
+                    motorLeft.Run((sbyte)power, limit);
+                    motorRight.Run((sbyte)-power, limit);
                 }
             }
             UpdateLabel("TurnLeft");
         }
-
         /// <summary>
         /// Stop movement motors
         /// </summary>
         /// 
         private void Stop()
         {
-            lblNotConnected.Text = "Stopping.";
+            lblInfo.Text = "Stopping.";
 
-            if (motorPair == null)
+            if (motorLeft != null && motorLeft != null)
             {
                 motorLeft.Brake();
                 motorRight.Brake();
             }
-            else
-            {
-                motorPair.Brake();
-                motorPair.ResetMotorPosition(true);
-            }
-            otherColorFounded = false;
-            firstRun = false;
-            colorSensor.OnPolled -= new Polled(IdentifyColorEvent);
+            //otherColorFounded = false;
+            //firstRun = false;
+            //if (colorSensor != null)
+            //    colorSensor.OnPolled -= new Polled(IdentifyColorEvent);
         }
-
         /// <summary>
-        /// Increase movement speed
+        /// Increase movement speed and recall the lastused movement action
         /// </summary>
         private void Turbo()
         {
@@ -382,9 +363,8 @@ namespace MindstormsController
                 InvokeMethod(lastUsedMethod);
             }
         }
-
         /// <summary>
-        /// Decrease movement speed
+        /// Decrease movement speed and recall the lastused movement action
         /// </summary>
         private void Brake()
         {
@@ -398,11 +378,13 @@ namespace MindstormsController
             }
         }
 
+        /// <summary>
+        /// Update the power bar with the new power
+        /// </summary>
         private void updatePowerBar()
         {
             pbPower.Value = initialPower;
         }
-
 
         #endregion
 
@@ -441,17 +423,17 @@ namespace MindstormsController
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            Back(initialPower, 0);
+            Run(-initialPower, 0);
         }
 
         private void btnTurnRight_Click(object sender, EventArgs e)
         {
-            TurnRight();
+            TurnRight(initialPower, 0);
         }
 
         private void btnTurnLeft_Click(object sender, EventArgs e)
         {
-            TurnLeft();
+            TurnLeft(initialPower, 0);
         }
 
         private void btnTurbo_Click(object sender, EventArgs e)

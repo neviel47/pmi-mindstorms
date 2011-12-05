@@ -30,7 +30,7 @@ namespace MindstormsController
         {
             this.Invoke((MethodInvoker)delegate
             {
-                lblNotConnected.Text = lastUsedMethod = lastUsed;
+                lblInfo.Text = lastUsedMethod = lastUsed;
             });
         }
         private void Tick(object o)
@@ -98,7 +98,7 @@ namespace MindstormsController
                 }
                 catch (Exception e)
                 {
-                    lblNotConnected.Text = e.Message;
+                    lblInfo.Text = e.Message;
                 }
             }
         }

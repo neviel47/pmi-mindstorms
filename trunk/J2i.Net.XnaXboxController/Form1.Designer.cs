@@ -62,7 +62,6 @@ namespace MindstormsController
             this.label9 = new System.Windows.Forms.Label();
             this.ddlController = new System.Windows.Forms.ComboBox();
             this.controllerTimer = new System.Windows.Forms.Timer(this.components);
-            this.lblNotConnected = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.buttonRight = new System.Windows.Forms.CheckBox();
             this.buttonLeft = new System.Windows.Forms.CheckBox();
@@ -93,6 +92,7 @@ namespace MindstormsController
             this.lblTick = new System.Windows.Forms.Label();
             this.btnLight = new System.Windows.Forms.Button();
             this.gbManualControls = new System.Windows.Forms.GroupBox();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftMotor)).BeginInit();
@@ -457,17 +457,6 @@ namespace MindstormsController
             // 
             this.controllerTimer.Tick += new System.EventHandler(this.controllerTimer_Tick);
             // 
-            // lblNotConnected
-            // 
-            this.lblNotConnected.AutoSize = true;
-            this.lblNotConnected.ForeColor = System.Drawing.Color.Red;
-            this.lblNotConnected.Location = new System.Drawing.Point(235, 12);
-            this.lblNotConnected.Name = "lblNotConnected";
-            this.lblNotConnected.Size = new System.Drawing.Size(131, 13);
-            this.lblNotConnected.TabIndex = 16;
-            this.lblNotConnected.Text = "Controller Is Disconnected";
-            this.lblNotConnected.Visible = false;
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.buttonRight);
@@ -774,11 +763,21 @@ namespace MindstormsController
             this.gbManualControls.TabStop = false;
             this.gbManualControls.Text = "Manual Controls";
             // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Location = new System.Drawing.Point(227, 12);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(131, 13);
+            this.lblInfo.TabIndex = 44;
+            this.lblInfo.Text = "Controller Is Disconnected";
+            // 
             // XnaInputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 445);
+            this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.btnLight);
             this.Controls.Add(this.lblTick);
             this.Controls.Add(this.followBlack);
@@ -804,7 +803,6 @@ namespace MindstormsController
             this.Controls.Add(this.btnTurbo);
             this.Controls.Add(this.BtnConnect);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.lblNotConnected);
             this.Controls.Add(this.ddlController);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox3);
@@ -865,7 +863,6 @@ namespace MindstormsController
         private System.Windows.Forms.CheckBox buttonBack;
         private System.Windows.Forms.CheckBox buttonRightStick;
         private System.Windows.Forms.CheckBox buttonLeftStick;
-        private System.Windows.Forms.Label lblNotConnected;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox buttonRight;
         private System.Windows.Forms.CheckBox buttonLeft;
@@ -896,6 +893,7 @@ namespace MindstormsController
         private System.Windows.Forms.Label lblTick;
         private System.Windows.Forms.Button btnLight;
         private System.Windows.Forms.GroupBox gbManualControls;
+        private System.Windows.Forms.Label lblInfo;
     }
 }
 
