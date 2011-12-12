@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="MindstormsController">
+</Property><Property Name="Fichier solution" Value="D:\Dev\C#\pmi-mindstorms\MindstormsController.sln">
+</Property><Property Name="Date" Value="mercredi 7 décembre 2011">
+</Property><Property Name="Time" Value="15:57:41">
+</Property></Properties><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj" Description="Fichier projet correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj.user" Description="Fichier utilisateur de projet correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj.user">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\AssemblyInfo.cs" Description="Fichier correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\Form1.cs" Description="Fichier correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\Form1.cs">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\App.ico" Description="Fichier correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.dll" Description="Fichier correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\xpidea.neuro.net.dll">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\Form1.resx" Description="Fichier correctement sauvegardé en tant que D:\Dev\C#\pmi-mindstorms\Backup\Form1.resx">
+</Event><Event ErrorLevel="1" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj" Description="Votre projet cible le .NET Framework 2.0 ou 3.0. Si votre projet utilise des assemblys qui requièrent une version plus récente du .NET Framework, votre projet ne sera pas généré. Vous pouvez modifier la version du .NET Framework en cliquant sur Propriétés dans le menu Projet et en sélectionnant une nouvelle version dans la zone déroulante '.NET Framework'. (Dans Visual Basic, cliquez sur le bouton Paramètres avancés du compilateur sous l'onglet Compiler.)">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj" Description="Projet correctement converti">
+</Event><Event ErrorLevel="3" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="xpidea.neuro.net.examples.backporpRPROP.ocr" Source="..\SimpleOCRsrc\xpidea.neuro.net.examples.backporpRPROP.ocr.csproj" Description="Analyse terminée : la mise à niveau n'est pas requise pour les fichiers projet.">
+</Event></UpgradeLog>

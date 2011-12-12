@@ -33,6 +33,14 @@ namespace MindstormsController
                 lblInfo.Text = lastUsedMethod = lastUsed;
             });
         }
+
+        private void UpdateColorLabel(string color)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                lblColor.Text = color;
+            });
+        }
         private void Tick(object o)
         {
             timerCount++;
@@ -47,32 +55,6 @@ namespace MindstormsController
         }
         private void btnLight_Click(object sender, EventArgs e)
         {
-            ultraSonicSensor = new NxtUltrasonicSensor();
-            mainBrick.Sensor2 = ultraSonicSensor;
-            ultraSonicSensor.SetContinuousMeasurementInterval(1);
-
-            ultraSonicSensor.ContinuousMeasurementCommand();
-            ultraSonicSensor.EventCaptureCommand();
-            byte? i = ultraSonicSensor.ReadActualScaleDivisor();
-            byte? j = ultraSonicSensor.ReadActualScaleFactor();
-            byte? k = ultraSonicSensor.ReadActualZero();
-            byte? l = ultraSonicSensor.ReadCommandState();
-            byte? m = ultraSonicSensor.ReadContinuousMeasurementsInterval();
-            byte? n = ultraSonicSensor.ReadFactoryScaleDivisor();
-            byte? o = ultraSonicSensor.ReadFactoryScaleFactor();
-            string p = ultraSonicSensor.ReadMeasurementUnits();
-
-
-
-
-            lblIntensity.Text = ultraSonicSensor.DistanceCm.Value.ToString();
-
-            /*lightSensor = new NxtLightSensor();
-            mainBrick.Sensor2 = lightSensor;
-            lightSensor.Poll();
-            lblColor.Text = lightSensor.GenerateLight.ToString();
-            lblIntensity.Text = lightSensor.Intensity.Value.ToString();
-            lblTriggerIntensity.Text = lightSensor.ThresholdIntensity.ToString();*/
 
         }
 
