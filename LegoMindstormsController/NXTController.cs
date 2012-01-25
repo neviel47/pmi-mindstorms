@@ -261,9 +261,15 @@ namespace LegoMindstormsController
                     motorLeft.Run((sbyte)power, limit);
                     motorRight.Run((sbyte)power, limit);
                     if (power > 0)
+                    {
+                        lastUsedMethod = "Run";
                         Console.WriteLine("Run");
+                    }
                     else
+                    {
+                        lastUsedMethod = "Back";
                         Console.WriteLine("Back");
+                    }
                 }
             }
         }
@@ -284,6 +290,7 @@ namespace LegoMindstormsController
                     motorLeft.Run((sbyte)power, limit);
                 }
             }
+            lastUsedMethod = "RunRight";
             Console.WriteLine("RunRight");
         }
         /// <summary>
@@ -303,6 +310,7 @@ namespace LegoMindstormsController
                     motorLeft.Run((sbyte)-power, limit);
                 }
             }
+            lastUsedMethod = "BackRight";
             Console.WriteLine("BackRight");
         }
         /// <summary>
@@ -322,6 +330,7 @@ namespace LegoMindstormsController
                     motorRight.Run((sbyte)-power, limit);
                 }
             }
+            lastUsedMethod = "BackLeft";
             Console.WriteLine("BackLeft");
         }
         /// <summary>
@@ -341,6 +350,7 @@ namespace LegoMindstormsController
                     motorRight.Run((sbyte)power, limit);
                 }
             }
+            lastUsedMethod = "RunLeft";
             Console.WriteLine("RunLeft");
         }
         /// <summary>
@@ -360,6 +370,7 @@ namespace LegoMindstormsController
                     motorLeft.Run((sbyte)power, limit);
                 }
             }
+            lastUsedMethod = "TurnRight";
             Console.WriteLine("TurnRight");
         }
         /// <summary>
@@ -379,6 +390,7 @@ namespace LegoMindstormsController
                     motorRight.Run((sbyte)-power, limit);
                 }
             }
+            lastUsedMethod = "TurnLeft";
             Console.WriteLine("TurnLeft");
         }
         /// <summary>
@@ -387,6 +399,7 @@ namespace LegoMindstormsController
         /// 
         public void Stop()
         {
+            
             Console.WriteLine("Stopping");
 
             if (motorLeft != null && motorLeft != null)
@@ -394,6 +407,7 @@ namespace LegoMindstormsController
                 motorLeft.Brake();
                 motorRight.Brake();
             }
+            
             //otherColorFounded = false;
             //firstRun = false;
             //if (colorSensor != null)
@@ -543,7 +557,7 @@ namespace LegoMindstormsController
         private void TouchedOnLeft(NxtPollable polledItem)
         {
             Stop();
-            mainBrick.PlaySoundfile("Woops.rso");
+            mainBrick.PlaySoundfile("R2D2_03.rso");
         }
 
         private void OnDistance(NxtPollable polledItem)
