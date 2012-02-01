@@ -1,0 +1,11 @@
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\TestRobot.Form1.resources
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\TestRobot.Properties.Resources.resources
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\A5\PMI\Dev\TestRobot\TestRobot\bin\Debug\TestRobot.exe
+D:\A5\PMI\Dev\TestRobot\TestRobot\bin\Debug\TestRobot.pdb
+D:\A5\PMI\Dev\TestRobot\TestRobot\bin\Debug\NKH.MindSqualls.dll
+D:\A5\PMI\Dev\TestRobot\TestRobot\bin\Debug\WinUsbWrapper.dll
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\TestRobot.exe
+D:\A5\PMI\Dev\TestRobot\TestRobot\obj\x86\Debug\TestRobot.pdb
