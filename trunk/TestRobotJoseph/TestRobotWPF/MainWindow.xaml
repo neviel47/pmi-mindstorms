@@ -1,0 +1,25 @@
+﻿<Window x:Class="TestRobotWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid KeyDown="Grid_KeyDown" KeyUp="Grid_KeyUp" Focusable="True" Name="grid" Height="373">
+        <Button Content="Connecter" Height="23" HorizontalAlignment="Left" Margin="46,66,0,0" Name="bt_connect" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="Déconnecter" Height="23" HorizontalAlignment="Left" Margin="46,95,0,0" Name="bt_disconnect" VerticalAlignment="Top" Width="75" Click="bt_disconnect_Click" />
+        <Label Content="En attente" Height="28" HorizontalAlignment="Left" Margin="127,65,0,0" Name="lb_con" VerticalAlignment="Top" />
+        <Button Content="Avancer" Height="23" HorizontalAlignment="Left" Margin="302,192,0,0" Name="bt_goFront" VerticalAlignment="Top" Width="75" Click="bt_goFront_Click" />
+        <Button Content="Gauche" Height="23" HorizontalAlignment="Left" Margin="221,223,0,0" Name="bt_goLeft" VerticalAlignment="Top" Width="75" Click="bt_goLeft_Click" />
+        <Button Content="Droite" Height="23" HorizontalAlignment="Right" Margin="0,223,45,0" Name="bt_goRight" VerticalAlignment="Top" Width="75" Click="bt_goRight_Click" />
+        <Button Content="Reculer" Height="23" HorizontalAlignment="Left" Margin="302,252,0,0" Name="bt_goBack" VerticalAlignment="Top" Width="75" Click="bt_goBack_Click" />
+        <Button Content="Couleur" Height="23" HorizontalAlignment="Left" Margin="302,223,0,0" Name="bt_colorDectect" VerticalAlignment="Top" Width="75" Click="bt_colorDectect_Click" />
+        <Label Content="Etat" Height="28" HorizontalAlignment="Left" Margin="325,158,0,0" Name="lb_state" VerticalAlignment="Top" />
+        <Label Content="Aucune Couleur" Height="28" HorizontalAlignment="Left" Margin="291,281,0,0" Name="lb_colorDetected" VerticalAlignment="Top" />
+        <Button Content="Demi-tour droite" Height="23" HorizontalAlignment="Left" Margin="46,147,0,0" Name="bt_wrongWay" VerticalAlignment="Top" Width="109" Click="bt_wrongWay_Click" />
+        <Button Content="Demi-tour gauche" Height="23" HorizontalAlignment="Left" Margin="46,178,0,0" Name="bt_WrongWayLeft" VerticalAlignment="Top" Width="109" Click="bt_WrongWayLeft_Click" />
+        <Button Content="Ouvrir" Height="23" HorizontalAlignment="Left" Margin="46,224,0,0" Name="bt_open" VerticalAlignment="Top" Width="75" Click="bt_open_Click" />
+        <Button Content="Fermer" Height="23" HorizontalAlignment="Left" Margin="46,253,0,0" Name="bt_close" VerticalAlignment="Top" Width="75" Click="bt_close_Click" />
+        <Button Content="Houra" Height="23" HorizontalAlignment="Left" Margin="46,282,0,0" Name="bt_sound" VerticalAlignment="Top" Width="75" Click="bt_sound_Click" />
+        <Label Content="Unknown" Height="28" HorizontalAlignment="Left" Margin="371,114,0,0" Name="lb_colorTransported" VerticalAlignment="Top" />
+        <Button Content="Changer" Height="23" HorizontalAlignment="Left" Margin="258,115,0,0" Name="bt_setColor" VerticalAlignment="Top" Width="75" Click="bt_setColor_Click" />
+        <ListBox Height="96" HorizontalAlignment="Left" Margin="255,12,0,0" Name="listTransportedColor" VerticalAlignment="Top" Width="106" />
+    </Grid>
+</Window>

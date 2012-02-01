@@ -1,0 +1,15 @@
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\MainWindow.baml
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\MainWindow.g.cs
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\App.g.cs
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\TestRobotWPF_MarkupCompile.cache
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\TestRobotWPF.g.resources
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\TestRobotWPF.Properties.Resources.resources
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\bin\Debug\TestRobotWPF.exe
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\bin\Debug\TestRobotWPF.pdb
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\bin\Debug\NKH.MindSqualls.dll
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\bin\Debug\WinUsbWrapper.dll
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\TestRobotWPF.exe
+D:\A5\PMI\Dev\TestRobot\TestRobotWPF\obj\x86\Debug\TestRobotWPF.pdb
